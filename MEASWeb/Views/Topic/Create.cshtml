@@ -1,0 +1,32 @@
+﻿@{
+    ViewBag.Title = "Creaet";
+    Layout = "~/Views/Share/_BackLayout.cshtml";
+}
+@model MEASWeb.Models.TopicViewModel
+
+@using (Html.BeginForm("Create", "Topic", FormMethod.Post, new { id = "usualValidate", @class = "main", novalidate = "novalidate" }))
+{
+    <fieldset>
+            <div class="widget">
+                <div class="whead"><h6>添加订阅主题</h6><div class="clear"></div></div>
+                <div class="formRow">
+                    <div class="grid3"><label>订阅标题:<span class="req">*</span></label></div>
+                    <div class="grid9">
+                        @Html.TextBoxFor(s => s.TopicName, new { @class = " required" })
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="formRow">
+                    <div class="grid3"><label>订阅方法:<span class="req">*</span></label></div>
+                    <div class="grid9">
+                        @Html.TextBoxFor(s => s.TopicMethod, new { @class = " required" })
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="formRow">
+                    <input type="submit" value="添加" class="buttonM bGreen formSubmit">
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </fieldset>
+}

@@ -1,0 +1,28 @@
+﻿@{
+    ViewBag.Title = "Error";
+    Layout = "~/Views/Share/_BackLayout.cshtml";
+}
+    <span class="errorNum">404</span>
+    <div class="errorContent">
+        <span class="errorDesc"><span class="icon-warning"></span>Oops! Sorry, an error has occured. Page not found!</span>
+        <div class="searchLine first">
+            <form action="">
+                <input type="text" name="search" class="ac" placeholder="Enter search text..." />
+                <button type="submit" name="find" value=""><span class="icos-search"></span></button>
+            </form>
+        </div>
+        <div class="fluid">
+            <a href="index.html" title="" class="buttonM bLightBlue grid6">Back to dashboard</a>
+            <a href="index.html" title="" class="buttonM bRed grid6">Back to the website</a>
+        </div>
+    </div>
+
+@section scripts{
+<script>
+    $(function () {
+        $('.wrapper').removeClass().addClass("errorWrapper");
+        $('.middleNavR').empty();
+        $('#sidebar').empty();
+    });
+    </script>
+}

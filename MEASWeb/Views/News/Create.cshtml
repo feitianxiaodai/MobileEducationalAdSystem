@@ -1,0 +1,117 @@
+﻿@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Share/_BackLayout.cshtml";
+}
+@model MEASWeb.Models.NewsViewModel
+
+<div class="fluid">
+    @using (Html.BeginForm("Create", "News", FormMethod.Post, new { id = "usualValidate", @class = "main", novalidate = "novalidate" }))
+    {
+        <fieldset>
+            <div class="widget">
+                <div class="whead"><h6>添加</h6><div class="clear"></div></div>
+                <div class="formRow">
+                    <div class="grid3"><label>新闻标题:<span class="req">*</span></label></div>
+                    <div class="grid9">
+                        @Html.TextBoxFor(s => s.Title, new { @class = " required" })
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="formRow">
+                    <div class="grid3"><label>新闻来源:<span class="req">*</span></label></div>
+                    <div class="grid9">
+                        @Html.TextBoxFor(s => s.Source, new { @class = " required" })
+                        @Html.ValidationMessageFor(s => s.Source, "", new { @class = "error" })
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="formRow">
+                    <div class="grid3"><label>作者:<span class="req">*</span></label></div>
+                    <div class="grid9">
+                        @Html.TextBoxFor(s => s.Author, new { @class = " required" })
+                        @Html.ValidationMessageFor(s => s.Author, "", new { @class = "error" })
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="formRow">
+                    <div class="grid3"><label>新闻类型:<span class="req">*</span></label></div>
+                    <div class="grid9">
+                        <select name="NewType">
+                            <option value="0">科大要闻</option>
+                            <option value="1">校园传真</option>
+                            <option value="2">媒体科大</option>
+                            <option value="3">校园公告</option>
+                            <option value="4">校内通知</option>
+                            <option value="5">学术动态</option>
+                            <option value="6">新闻资讯</option>
+                        </select>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="formRow">
+                    <div class="grid3"><label>上传图片:</label></div>
+                    <div class="grid9">
+                        <div id="uploaders"></div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="formRow">
+                    <div class="grid3"><label>新闻内容:<span class="req">*</span></label></div>
+                    <div class="grid9">
+                        @Html.TextAreaFor(s => s.newBodyHtml, new { id="editorContent" })
+                        @Html.HiddenFor(s => s.ImageUrl, new { id="imageUrl"})
+                    </div>
+                    <div class="clear"></div>
+                </div>
+
+                <div class="formRow">
+                    <input type="submit" value="Submit" class="buttonM bGreen formSubmit">
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </fieldset>
+    }
+
+</div>
+
+
+
+@section scripts{
+    <script src="~/Scripts/ckeditor/ckeditor.js"></script>
+    <script src="~/Scripts/ckeditor/config.js"></script>
+    <script src="~/Scripts/ckeditor/lang/zh-cn.js"></script>
+    <script>
+        var editorObj;
+        $(function () {
+            //初始化上传组件
+            initUploader();
+            editorObj = CKEDITOR.replace('editorContent');
+        });
+
+        function initUploader() {
+            $("#uploaders").pluploadQueue({
+                runtimes: 'html5,html4',
+                url: '@Url.Action("Upload")',
+                max_file_size: '2000kb',
+                unique_names: true,
+                filters: [
+                    { title: "Image files", extensions: "jpg,gif,png" }
+                ],
+                multiple_queues: true,
+                init: {
+                    FileUploaded: function (uploader, files, obj) {
+                        //add html to editor.
+                        //editorObj.insertHtml('<p>sss</p>');
+                        var paths = eval("(" + obj.response + ")");
+                        for (var i = 0; i < paths.path.length; i++) {
+                            editorObj.insertHtml('<img src="'+paths.path[i]+'"/>');
+                        }
+                        if (paths.path.length > 0) {
+                            $('#imageUrl').val(paths.path[0]);
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+}

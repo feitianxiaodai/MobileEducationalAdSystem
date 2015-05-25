@@ -1,0 +1,105 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Share/_BackLayout.cshtml";
+}
+
+<style>
+    .alignCenter {
+        text-align: center;
+    }
+</style>
+<div class="widget">
+    <div class="whead">
+        <h6>订阅主题列表</h6>
+        <div class="clear"></div>
+    </div>
+    <table cellpadding="0" cellspacing="0" width="100%" class="tDefault" id="newsList">
+        <thead>
+            <tr>
+                <td>订阅主题名称</td>
+                <td>订阅主题方法</td>
+                <td>操作</td>
+            </tr>
+        </thead>
+    </table>
+    <div class="nNote nSuccess" style="display:none;">
+        <p>删除成功</p>
+    </div>
+    <div class="nNote nFailure" style="display:none;">
+        <p>删除失败</p>
+    </div>
+</div>
+
+
+@section scripts{
+    <script>
+        $(function () {
+            init();
+        });
+
+        function init() {
+            $('#newsList').dataTable({
+                "sPaginationType": "full_numbers",
+                //"iDisplayLength": 30,
+                "bJQueryUI": false,
+                "sDom": '<"H"fl>t<"F"ip>',
+
+                "aoColumns": [
+                    {
+                        "bSearchable": false,
+                        "bSortable": false,
+                        "mDataProp": "TopicName",
+                        "sName": "TopicName",
+                        "sTitle": "订阅主题名称",
+                        "sClass": "alignCenter",
+                    },
+                    {
+                        "bSearchable": false,
+                        "bSortable": false,
+                        "mDataProp": "TopicMethod",
+                        "sName": "TopicMethod",
+                        "sTitle": "订阅主题方法",
+                        "sClass": "alignCenter",
+                    },
+                    
+                    {
+                        "bSearchable": false,
+                        "bSortable": false,
+                        "sClass": "alignCenter",
+                        "mDataProp": null, "fnRender": function (oObj) {
+                            //alert(oObj.aData.Id);
+                            var opHtml = '';
+                            opHtml += '<a href="javascript:void(0);" onclick="DeleteConfirm('+oObj.aData.ID+')" class="tablectrl_small bBlack tipS" style="margin:2px;" original-title="Remove"><span class="iconb" data-icon=""></span></a>';
+                            return opHtml;
+                        }
+                    }
+
+                ],
+                //"bProcessing": true,
+                "bServerSide": true,
+                "sAjaxSource": "@Url.Action("_AjaxGetTopicRecords", "Topic")",
+                "bDestroy":true
+                //"fnServerData": function (sSource, aoData, fnCallback) {
+                //    $.getJSON(sSource, aoData, function (json) {
+                //        alet(json);
+                //        fnCallback(json);
+                //    });
+                //}
+            });
+        }
+
+        function DeleteConfirm(id){
+            if (window.confirm('确定删除吗?')) {
+                $.post('@Url.Action("Delete","Topic")', { id: id }, function (data) {
+                    if (data.result == 200) {
+                        $('.nSuccess').css('display', 'block');
+
+                    } else {
+                        $('.nFailure').css('dispaly', 'block');
+                    }
+                    init();
+                });
+            }
+        }
+    </script>
+}

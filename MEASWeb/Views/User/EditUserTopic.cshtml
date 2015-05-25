@@ -1,0 +1,55 @@
+﻿@{
+    ViewBag.Title = "EditUserTopic";
+    Layout = "~/Views/Share/_BackLayout.cshtml";
+}
+@model MEASWeb.Models.MemberViewModel
+@using (Html.BeginForm("EditUserTopic", "User", FormMethod.Post, new { id = "usualValidate", @class = "main", novalidate = "novalidate" }))
+{
+    <fieldset>
+        <div class="widget">
+            <div class="whead"><h6>修改用户订阅主题</h6><div class="clear"></div></div>
+            <div class="formRow">
+                <div class="grid3"><label>用户账户:<span class="req">*</span></label></div>
+                <div class="grid9">
+                    @Html.TextBoxFor(s => s.MemberId, new { @class = " required", @readonly = "readonly" })
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="formRow">
+                <div class="grid3"><label>用户姓名:<span class="req">*</span></label></div>
+                <div class="grid9">
+                    @Html.TextBoxFor(s => s.SName, new { @class = " required", @readonly = "readonly" })
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="formRow">
+                <div class="grid3"><label>订阅主题:<span class="req">*</span></label></div>
+                <div class="grid9">
+                <select data-placeholder="请选择订阅主题" id="groupId" class="fullwidth select" multiple="multiple" tabindex="6" name="TopicGroup">
+                    @{
+                        var topicRecords = ViewBag.topicRecords as List<MEASWeb.Models.TopicViewModel>;
+
+                        if (topicRecords != null && topicRecords.Count > 0)
+                        {
+                            <optgroup label="全部主题">
+                                @foreach(var item in topicRecords)
+                                {
+                                    <option value="@item.ID">@item.TopicName</option>
+                                }
+                            </optgroup>
+                        }
+
+                    }
+                    
+                </select>
+                <div class="clear"></div>
+            </div>
+            <div class="formRow">
+                <input type="hidden" value="@Model.Id" name="Id"/>
+                <input type="submit" value="修改" class="buttonM bGreen formSubmit">
+                <div class="clear"></div>
+            </div>
+        </div>
+    </fieldset>
+}
+
