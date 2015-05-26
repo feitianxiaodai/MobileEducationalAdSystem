@@ -45,5 +45,15 @@ namespace MEASService.Service
             }
         }
 
+        public List<string> GetTopicByGroupIds(int[] groupIds)
+        {
+            List<string> topicList = new List<string>();
+            if(groupIds!=null && groupIds.Count()>0)
+            {
+                topicList = _unitOfWork.TopicRepository.Query().Where(s => s.GroupInfo.Any(g => groupIds.Contains(g.Id))).Select(s => s.TopicMethod).ToList();
+            }
+            return topicList;
+        }
+
     }
 }

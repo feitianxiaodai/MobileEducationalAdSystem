@@ -3,6 +3,17 @@
     Layout = "~/Views/Share/_BackLayout.cshtml";
 }
 @model MEASWeb.Models.MessageListViewModel
+<style>
+    .alignCenter {
+        text-align: center;
+    }
+    .checkRow{
+        width:16px;
+        height:16px;
+        background:none;
+        display:inline-block;
+    }
+</style>
 <div class="fluid">
     @using (Ajax.BeginForm("Create", "Message", new AjaxOptions { HttpMethod = "POST", OnSuccess = "SubmitSuccess"}, new { id="msgForm"}))
     {
@@ -17,9 +28,17 @@
                     <div class="clear"></div>
                 </div>
                 <div class="formRow">
+                    <div class="grid3"><label>添加新闻:</label></div>
+                    <div class="grid9">
+                        <input type="text" id="txtNewTitle"/>
+                        <input type="hidden" id="txtNewId" name="NewID"/>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="formRow">
                     <div class="grid3"><label>推送组织:<span class="req">*</span></label></div>
                     <div class="grid9">
-                        <select data-placeholder="请选择部门" id="groupId" class="fullwidth select" multiple="multiple" tabindex="6">
+                        <select data-placeholder="请选择部门" id="groupId" name="PushGroup" class="fullwidth select" multiple="multiple" tabindex="6">
                             @{
                                 var groupList = (List<MEASModel.POCOModel.POCOGroupModel>)ViewBag.group;
                                 if (groupList != null && groupList.Count > 0)
@@ -30,12 +49,13 @@
                                             <option value="@item.ID">@item.GroupTitle</option>
                                         }
                                     </optgroup>
-                                    
+
                                 }
                             }
                             <!--<option value=""></option>-->
-                            
-                        </select>  
+
+                        </select>
+  
                     </div>
                     <div class="clear"></div>
                 </div>
@@ -75,6 +95,19 @@
         </fieldset>
 
     }
+
+    <div id="dialog" style="display:none;">
+        <!--<span>loading...<img src="@Url.Content("~/Content/images/elements/loaders/4.gif")" style="float: left; margin: 12px 0 0 10px;" alt=""></span>-->
+        <table cellpadding="0" cellspacing="0" width="100%" class="tDefault" id="newsList">
+            <thead>
+                <tr>
+                    <td>选择</td>
+                    <td>ID</td>
+                    <td>新闻标题</td>
+                </tr>
+            </thead>
+        </table>
+    </div>
 </div>
 @section scripts{
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
@@ -82,6 +115,32 @@
         $(function () {
             $('#sendMsg').click(function () {
                 checkIsNull();
+            });
+
+            $('#txtNewTitle').click(function () {
+                initNewList();
+                $('.tablePars').remove();
+                $('#dialog').dialog({
+                    autoOpen: true,
+                    width: 600,
+                    buttons: {
+                        "确定": function () {
+                            var chooseLength = $('#newsList tr input[type=checkbox]:checked').length;
+                            if (chooseLength > 1 || chooseLength<=0) {
+                                alert('只能选择一条数据');
+                            } else {
+                                var chooseNewId = $($('#newsList tr input[type=checkbox]:checked')[0]).val();
+                                var chooseNewTitle = $($('#newsList tr input[type=checkbox]:checked')[0]).parent().next().next().html();
+                                $('#txtNewTitle').val(chooseNewTitle);
+                                $('#txtNewId').val(chooseNewId);
+                                $(this).dialog("close");
+                            }
+                        },
+                        "取消": function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
             });
         });
 
@@ -103,6 +162,56 @@
             }
         }
 
-        
+        //初始化新闻列表
+        function initNewList() {
+            $('#newsList').dataTable({
+                "sPaginationType": "full_numbers",
+                //"iDisplayLength": 30,
+                "bJQueryUI": false,
+                "sDom": '<"H"fl>t<"F"ip>',
+                "bLengthChange":false,
+                "aoColumns": [
+                    {
+                        "bSearchable": false,
+                        "bSortable": false,
+                        "sClass": "alignCenter",
+                        "mDataProp": null, "fnRender": function (oObj) {
+                            var opHtml = '<input type="checkbox" value="' + oObj.aData.Id + '" class="checkRow" />';
+                            return opHtml;
+                        }
+                    },
+                    {
+                        "bSearchable": false,
+                        "bSortable": false,
+                        "mDataProp": "Id",
+                        "sName": "Id",
+                        "sTitle": "ID",
+                        "sClass": "alignCenter",
+                    },
+                    {
+                        "bSearchable": false,
+                        "bSortable": false,
+                        "mDataProp": "Title",
+                        "sName": "Title",
+                        "sTitle": "新闻标题",
+                        "sClass": "alignCenter",
+                    },
+
+
+                ],
+                //"bProcessing": true,
+                "bServerSide": true,
+                "sAjaxSource": "@Url.Action("_AjaxGetNewsRecords", "Home")",
+                "bDestroy": true
+                //"fnServerData": function (sSource, aoData, fnCallback) {
+                //    $.getJSON(sSource, aoData, function (json) {
+                //        alet(json);
+                //        fnCallback(json);
+                //    });
+                //}
+            });
+        }
+
+
     </script>
 }

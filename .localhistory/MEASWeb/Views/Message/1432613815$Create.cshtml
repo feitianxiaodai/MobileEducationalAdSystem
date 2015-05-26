@@ -1,0 +1,200 @@
+﻿@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Share/_BackLayout.cshtml";
+}
+@model MEASWeb.Models.MessageListViewModel
+<style>
+    .alignCenter {
+        text-align: center;
+    }
+</style>
+<div class="fluid">
+    @using (Ajax.BeginForm("Create", "Message", new AjaxOptions { HttpMethod = "POST", OnSuccess = "SubmitSuccess"}, new { id="msgForm"}))
+    {
+        <fieldset>
+            <div class="widget">
+                <div class="whead"><h6>添加</h6><div class="clear"></div></div>
+                <div class="formRow">
+                    <div class="grid3"><label>通知标题:<span class="req">*</span></label></div>
+                    <div class="grid9">
+                        @Html.TextBoxFor(s => s.MessageTitle, new { @class = " required" })
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="formRow">
+                    <div class="grid3"><label>添加新闻:</label></div>
+                    <div class="grid9">
+                        <input type="text" id="txtNewTitle"/>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="formRow">
+                    <div class="grid3"><label>推送组织:<span class="req">*</span></label></div>
+                    <div class="grid9">
+                        <select data-placeholder="请选择部门" id="groupId" class="fullwidth select" multiple="multiple" tabindex="6">
+                            @{
+                                var groupList = (List<MEASModel.POCOModel.POCOGroupModel>)ViewBag.group;
+                                if (groupList != null && groupList.Count > 0)
+                                {
+                                    <optgroup label="校级部门">
+                                        @foreach (var item in groupList)
+                                        {
+                                            <option value="@item.ID">@item.GroupTitle</option>
+                                        }
+                                    </optgroup>
+                                    
+                                }
+                            }
+                            <!--<option value=""></option>-->
+                            
+                        </select>  
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="formRow">
+                    <ul class="messagesOne">
+                        @*<li class="by_user">
+                            <a href="#" title=""><img src="@Url.Content("~/Content/images/live/face1.png")" alt="" /></a>
+                            <div class="messageArea">
+                                <span class="aro"></span>
+                                <div class="infoRow">
+                                    <span class="name"><strong>John</strong> says:</span>
+                                    <span class="time">3 hours ago</span>
+                                    <div class="clear"></div>
+                                </div>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam vel est enim, vel eleifend felis. Ut volutpat, leo eget euismod scelerisque, eros purus lacinia velit, nec rhoncus mi dui eleifend orci.
+                                Phasellus ut sem urna, id congue libero. Nulla eget arcu vel massa suscipit ultricies ac id velit
+                            </div>
+                            
+                            <div class="clear"></div>
+                        </li>
+
+                        <li class="divider"><span></span></li>*@
+                        
+                    </ul>
+                    <div class="enterMessage">
+                        @Html.TextBoxFor(s => s.MessageContent, new { placeholder = "输入要发送的信息..." })
+                        <div class="sendBtn">
+                            <input type="button" id="sendMsg" name="sendMessage" class="buttonS bLightBlue" value="发送" />
+                        </div>
+                    </div>  
+                </div>
+                <!--<div class="formRow">
+                    <input type="submit" value="发送" class="buttonM bGreen formSubmit">
+                    <div class="clear"></div>
+                </div>-->
+            </div>
+        </fieldset>
+
+    }
+
+    <div id="dialog" style="display:none;">
+        <span>loading...<img src="@Url.Content("~/Content/images/elements/loaders/4.gif")" style="float: left; margin: 12px 0 0 10px;" alt=""></span>
+        <table cellpadding="0" cellspacing="0" width="100%" class="tDefault" id="newsList">
+            <thead>
+                <tr>
+                    <td>选择</td>
+                    <td>ID</td>
+                    <td>新闻标题</td>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+@section scripts{
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script>
+        $(function () {
+            $('#sendMsg').click(function () {
+                checkIsNull();
+            });
+
+            $('#txtNewTitle').click(function () {
+                initNewList();
+                $('.tablePars').remove();
+                $('#dialog').dialog({
+                    autoOpen: true,
+                    width: 600,
+                    buttons: {
+                        "确定": function () {
+                            $(this).dialog("close");
+                        },
+                        "取消": function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+            });
+        });
+
+        //发送前检查是否符合条件
+        function checkIsNull() {
+            var title = $('#MessageTitle').val();
+            var group = $('#groupId').val();
+            var content = $('#MessageContent').val();
+            if (title == '' || group == null || content == '') {
+                alert('内容不能为空');
+            } else {
+                $('#msgForm').submit();
+            }
+        }
+
+        function SubmitSuccess(data) {
+            if (data.res == "ok") {
+                $('.messagesOne').append(data.msg);
+            }
+        }
+
+        //初始化新闻列表
+        function initNewList() {
+            $('#newsList').dataTable({
+                "sPaginationType": "full_numbers",
+                //"iDisplayLength": 30,
+                "bJQueryUI": false,
+                "sDom": '<"H"fl>t<"F"ip>',
+                "bLengthChange":false,
+                "aoColumns": [
+                    {
+                        "bSearchable": false,
+                        "bSortable": false,
+                        "sClass": "alignCenter",
+                        "mDataProp": null, "fnRender": function (oObj) {
+                            var opHtml = '<div class="checker hover" id="uniform-undefined"><span class=""><input type="checkbox" name="checkRow" style="opacity: 0;"></span></div>';
+                            return opHtml;
+                        }
+                    },
+                    {
+                        "bSearchable": false,
+                        "bSortable": false,
+                        "mDataProp": "Id",
+                        "sName": "Id",
+                        "sTitle": "ID",
+                        "sClass": "alignCenter",
+                    },
+                    {
+                        "bSearchable": false,
+                        "bSortable": false,
+                        "mDataProp": "Title",
+                        "sName": "Title",
+                        "sTitle": "新闻标题",
+                        "sClass": "alignCenter",
+                    },
+
+
+                ],
+                //"bProcessing": true,
+                "bServerSide": true,
+                "sAjaxSource": "@Url.Action("_AjaxGetNewsRecords", "Home")",
+                "bDestroy": true
+                //"fnServerData": function (sSource, aoData, fnCallback) {
+                //    $.getJSON(sSource, aoData, function (json) {
+                //        alet(json);
+                //        fnCallback(json);
+                //    });
+                //}
+            });
+        }
+
+
+    </script>
+}

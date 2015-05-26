@@ -17,5 +17,9 @@ namespace MEASWeb.Models
         public string MessageContent { get; set; }
 
         public string PushTime { get; set; }
+
+        public int NewID { get; set; }
+
+        public int[] PushGroup { get; set; }
     }
 }

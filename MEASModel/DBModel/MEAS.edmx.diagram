@@ -13,7 +13,8 @@
         <AssociationConnector Association="MEASModel.Member_TopicInfo" />
         <EntityTypeShape EntityType="MEASModel.Course" Width="1.5" PointX="0.75" PointY="8.5" />
         <AssociationConnector Association="MEASModel.Member_Course" />
-        <EntityTypeShape EntityType="MEASModel.NewsInfo" Width="1.5" PointX="5.375" PointY="4.75" />
+        <EntityTypeShape EntityType="MEASModel.NewsInfo" Width="1.5" PointX="8.5" PointY="4.625" />
+        <AssociationConnector Association="MEASModel.Group_TopicInfo" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

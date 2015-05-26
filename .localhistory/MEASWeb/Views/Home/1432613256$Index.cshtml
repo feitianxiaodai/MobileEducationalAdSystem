@@ -1,0 +1,132 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Share/_BackLayout.cshtml";
+}
+<style>
+    .alignCenter {
+        text-align: center;
+    }
+</style>
+<div class="widget">
+    <div class="whead">
+        <h6>新闻列表</h6>
+        <div class="clear"></div>
+    </div>
+    <table cellpadding="0" cellspacing="0" width="100%" class="tDefault" id="newsList">
+        <thead>
+            <tr>
+                <td></td>
+                <td>新闻标题</td>
+                <td>新闻来源</td>
+                <td>新闻作者</td>
+                <td>类别</td>
+                <td>发布时间</td>
+                <td>操作</td>
+            </tr>
+        </thead>
+    </table>
+    <div class="nNote nSuccess" style="display:none;">
+        <p>删除成功</p>
+    </div>
+    <div class="nNote nFailure" style="display:none;">
+        <p>删除失败</p>
+    </div>
+</div>
+
+
+@section scripts{
+    <script>
+        $(function () { 
+            init();
+        });
+
+        function init() {
+            $('#newsList').dataTable({
+                "sPaginationType": "full_numbers",
+                //"iDisplayLength": 30,
+                "bJQueryUI": false,
+                "sDom": '<"H"fl>t<"F"ip>',
+                
+                "aoColumns": [
+                    {
+                        "bSearchable": false,
+                        "bSortable": false,
+                        "mDataProp": "Title",
+                        "sName": "Title",
+                        "sTitle": "新闻标题",
+                        "sClass": "alignCenter",
+                    },
+                    {
+                        "bSearchable": false,
+                        "bSortable": false,
+                        "mDataProp": "Source",
+                        "sName": "Source",
+                        "sTitle": "新闻来源",
+                        "sClass": "alignCenter",
+                    },
+                    {
+                        "bSearchable": false,
+                        "bSortable": false,
+                        "mDataProp": "Author",
+                        "sName": "Author",
+                        "sTitle": "新闻作者",
+                        "sClass": "alignCenter",
+                    },
+                    {
+                        "bSearchable": false,
+                        "bSortable": false,
+                        "mDataProp": "NewType",
+                        "sName": "NewType",
+                        "sTitle": "类型",
+                        "sClass": "alignCenter",
+                    },
+                    {
+                        "bSearchable": false,
+                        "bSortable": false,
+                        "mDataProp": "PublishTime",
+                        "sName": "PublishTime",
+                        "sTitle": "发布时间",
+                        "sClass": "alignCenter",
+                    },
+                    {
+                        "bSearchable": false,
+                        "bSortable": false,
+                        "sClass": "alignCenter",
+                        "mDataProp": null, "fnRender": function (oObj) {
+                            //alert(oObj.aData.Id);
+                            var opHtml = '<a href="@Url.Action("Edit","News")?id=' + oObj.aData.Id + '" class="tablectrl_small bLightBlue tipS" style="margin:2px;" original-title="Edit"><span class="iconb" data-icon=""></span></a>';
+                            //opHtml += '<a href="#" class="tablectrl_small bGold tipS" style="margin:2px;" original-title="Options"><span class="iconb" data-icon=""></span></a>';
+                            opHtml += '<a href="javascript:void(0);" onclick="DeleteConfirm('+oObj.aData.Id+')" class="tablectrl_small bBlack tipS" style="margin:2px;" original-title="Remove"><span class="iconb" data-icon=""></span></a>';
+                            return opHtml;
+                        }
+                    }
+                
+                ],
+                //"bProcessing": true,
+                "bServerSide": true,
+                "sAjaxSource": "@Url.Action("_AjaxGetNewsRecords", "Home")",
+                "bDestroy":true
+                //"fnServerData": function (sSource, aoData, fnCallback) {
+                //    $.getJSON(sSource, aoData, function (json) {
+                //        alet(json);
+                //        fnCallback(json);
+                //    });
+                //}
+            });
+        }
+
+        function DeleteConfirm(id){
+            if (window.confirm('确定删除吗?')) {
+                $.post('@Url.Action("Delete","News")', { id: id }, function (data) {
+                    if (data.result == 200) {
+                        $('.nSuccess').css('display', 'block');
+                        
+                    } else {
+                        $('.nFailure').css('dispaly', 'block'); 
+                    }
+                    init();
+                });
+            }
+        }
+    </script>
+}
