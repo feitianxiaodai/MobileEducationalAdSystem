@@ -194,5 +194,5 @@ FakesAssemblies/
 
 # Visual Studio 6 workspace options file
 *.opt
-/MEASWeb/Web.config
-/MEASApi/Web.config
+MEASWeb/Web.config
+MEASApi/Web.config
