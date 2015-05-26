@@ -42,10 +42,9 @@
         function init() {
             $('#newsList').dataTable({
                 "sPaginationType": "full_numbers",
-                //"iDisplayLength": 30,
+                "iDisplayLength": 20,
                 "bJQueryUI": false,
                 "sDom": '<"H"fl>t<"F"ip>',
-                
                 "aoColumns": [
                     {
                         "bSearchable": false,
@@ -103,7 +102,7 @@
                 ],
                 //"bProcessing": true,
                 "bServerSide": true,
-                "sAjaxSource": "@Url.Action("_AjaxGetNewsRecords", "Home")",
+                "sAjaxSource": "@Url.Action("_AjaxGetNewsRecords", "Home")"+"?date="+new Date().getTime(),
                 "bDestroy":true
                 //"fnServerData": function (sSource, aoData, fnCallback) {
                 //    $.getJSON(sSource, aoData, function (json) {
