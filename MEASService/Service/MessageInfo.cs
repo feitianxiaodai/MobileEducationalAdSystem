@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MEASDAL;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Linq;
@@ -7,12 +8,17 @@ using System.Threading.Tasks;
 
 namespace MEASService.Service
 {
-    public class MessageInfo : BaseService<MEASModel.DBModel.MessageInfo>, MEASService.IService.IMessage
+    public class MessageInfo
     {
+         private UnitOfWork _unitOfWork = null;
+         public MessageInfo()
+        {
+            _unitOfWork = new UnitOfWork();
+        }
         public List<MEASModel.DBModel.MessageInfo> GetMessageRecordsList(int pageIndex, int pageSize, out int pageTotalCount)
         {
-            pageTotalCount = this.GetPageCount(s => true);
-            var newsRecords = GetPagedList(pageIndex, pageSize, s => true, s => s.PushTime);
+            pageTotalCount = _unitOfWork.MessageRepository.Query().Count();
+            var newsRecords = _unitOfWork.MessageRepository.Query().OrderBy(s => s.PushTime).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
             if (newsRecords != null && newsRecords.Count > 0)
             {
                 return newsRecords;
@@ -22,7 +28,7 @@ namespace MEASService.Service
 
         public MEASModel.DBModel.MessageInfo GetMessageModel(int id)
         {
-            var model = this.GetListBy(s => s.Id == id).FirstOrDefault();
+            var model = _unitOfWork.MessageRepository.Query().FirstOrDefault(s => s.Id == id);
             return model;
         }
 
@@ -30,7 +36,8 @@ namespace MEASService.Service
         {
             try
             {
-                return this.Add(model);
+                _unitOfWork.MessageRepository.Insert(model);
+                return _unitOfWork.Commit();
             }
             catch (DbEntityValidationException edm)
             {

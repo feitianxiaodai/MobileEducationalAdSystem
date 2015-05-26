@@ -1495,6 +1495,9 @@
     <Content Include="Service References\pushService\MEASWeb.pushService.PushMessageByTopicResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
+    <Content Include="Service References\pushService\MEASWeb.pushService.PushMessageByTopicSSSResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
     <None Include="Service References\pushService\MyPushServicePort1.xsd">
       <SubType>Designer</SubType>
     </None>

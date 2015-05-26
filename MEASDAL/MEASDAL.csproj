@@ -48,6 +48,8 @@
     <Compile Include="BaseDAL.cs" />
     <Compile Include="CourseRepository.cs" />
     <Compile Include="DbContextFactory.cs" />
+    <Compile Include="GroupRepository.cs" />
+    <Compile Include="MessageRepository.cs" />
     <Compile Include="NewsRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RepositoryBase.cs" />

@@ -15,6 +15,8 @@ namespace MEASDAL
         private TopicRepository _topicRepository = null;
         private NewsRepository _newsRepository = null;
         private CourseRepository _courseRepository = null;
+        private GroupeRepository _groupRepository = null;
+        private MessageRepository _messageRepository = null;
         public UnitOfWork()
         {
             _edm = new MEASEntities();
@@ -30,6 +32,30 @@ namespace MEASDAL
                 }
 
                 return _userRepository;
+            }
+        }
+        public GroupeRepository GroupeRepository
+        {
+            get
+            {
+                if (_groupRepository == null)
+                {
+                    _groupRepository = new GroupeRepository(_edm);
+                }
+
+                return _groupRepository;
+            }
+        }
+        public MessageRepository MessageRepository
+        {
+            get
+            {
+                if (_messageRepository == null)
+                {
+                    _messageRepository = new MessageRepository(_edm);
+                }
+
+                return _messageRepository;
             }
         }
 

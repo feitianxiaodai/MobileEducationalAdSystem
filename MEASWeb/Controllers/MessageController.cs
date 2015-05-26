@@ -11,8 +11,8 @@ namespace MEASWeb.Controllers
 {
     public class MessageController : Controller
     {
-        MEASService.IService.IMessage iMessageService = new MEASService.Service.MessageInfo();
-        MEASService.IService.IGroupInfo iGroupService = new MEASService.Service.GroupInfo();
+        MEASService.Service.MessageInfo iMessageService = new MEASService.Service.MessageInfo();
+        MEASService.Service.GroupInfo iGroupService = new MEASService.Service.GroupInfo();
         pushService.MyPushServiceDelegateClient pushService = new pushService.MyPushServiceDelegateClient();
         public ActionResult Index()
         {
