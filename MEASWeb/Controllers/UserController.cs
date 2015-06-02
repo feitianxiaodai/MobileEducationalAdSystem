@@ -67,5 +67,10 @@ namespace MEASWeb.Controllers
             }
             return View();
         }
+
+        public ActionResult Logout()
+        {
+            return RedirectToAction("Login");
+        }
     }
 }
