@@ -16,8 +16,8 @@ namespace MEASModel.DBModel
     {
         public MemberInfo()
         {
-            this.Topic = new HashSet<Topic>();
             this.Course = new HashSet<Course>();
+            this.GroupInfo = new HashSet<GroupInfo>();
         }
     
         public int Id { get; set; }
@@ -28,7 +28,7 @@ namespace MEASModel.DBModel
         public string MemberMark { get; set; }
         public Nullable<int> GroupId { get; set; }
     
-        public virtual ICollection<Topic> Topic { get; set; }
         public virtual ICollection<Course> Course { get; set; }
+        public virtual ICollection<GroupInfo> GroupInfo { get; set; }
     }
 }

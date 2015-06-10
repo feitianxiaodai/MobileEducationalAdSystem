@@ -49,13 +49,13 @@
           <Property Name="MemberId" Type="int" Nullable="false" />
           <Property Name="CourseId" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="Member_TopicInfo">
+        <EntityType Name="Member_GroupInfo">
           <Key>
-            <PropertyRef Name="MemberId" />
-            <PropertyRef Name="TopicId" />
+            <PropertyRef Name="GroupID" />
+            <PropertyRef Name="MemeberID" />
           </Key>
-          <Property Name="MemberId" Type="int" Nullable="false" />
-          <Property Name="TopicId" Type="int" Nullable="false" />
+          <Property Name="GroupID" Type="int" Nullable="false" />
+          <Property Name="MemeberID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="MemberInfo">
           <Key>
@@ -155,27 +155,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Member_TopicInfo_MemberInfo">
+        <Association Name="FK_Member_GroupInfo_GroupInfo">
+          <End Role="GroupInfo" Type="Self.GroupInfo" Multiplicity="1" />
+          <End Role="Member_GroupInfo" Type="Self.Member_GroupInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GroupInfo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Member_GroupInfo">
+              <PropertyRef Name="GroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Member_GroupInfo_MemberInfo">
           <End Role="MemberInfo" Type="Self.MemberInfo" Multiplicity="1" />
-          <End Role="Member_TopicInfo" Type="Self.Member_TopicInfo" Multiplicity="*" />
+          <End Role="Member_GroupInfo" Type="Self.Member_GroupInfo" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="MemberInfo">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Member_TopicInfo">
-              <PropertyRef Name="MemberId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Member_TopicInfo_Topic">
-          <End Role="Topic" Type="Self.Topic" Multiplicity="1" />
-          <End Role="Member_TopicInfo" Type="Self.Member_TopicInfo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Topic">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Member_TopicInfo">
-              <PropertyRef Name="TopicId" />
+            <Dependent Role="Member_GroupInfo">
+              <PropertyRef Name="MemeberID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -208,7 +208,7 @@
           <EntitySet Name="Group_TopicInfo" EntityType="Self.Group_TopicInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GroupInfo" EntityType="Self.GroupInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Member_Course" EntityType="Self.Member_Course" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Member_TopicInfo" EntityType="Self.Member_TopicInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Member_GroupInfo" EntityType="Self.Member_GroupInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MemberInfo" EntityType="Self.MemberInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Message_GroupInfo" EntityType="Self.Message_GroupInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MessageInfo" EntityType="Self.MessageInfo" Schema="dbo" store:Type="Tables" />
@@ -230,13 +230,13 @@
             <End Role="MemberInfo" EntitySet="MemberInfo" />
             <End Role="Member_Course" EntitySet="Member_Course" />
           </AssociationSet>
-          <AssociationSet Name="FK_Member_TopicInfo_MemberInfo" Association="Self.FK_Member_TopicInfo_MemberInfo">
-            <End Role="MemberInfo" EntitySet="MemberInfo" />
-            <End Role="Member_TopicInfo" EntitySet="Member_TopicInfo" />
+          <AssociationSet Name="FK_Member_GroupInfo_GroupInfo" Association="Self.FK_Member_GroupInfo_GroupInfo">
+            <End Role="GroupInfo" EntitySet="GroupInfo" />
+            <End Role="Member_GroupInfo" EntitySet="Member_GroupInfo" />
           </AssociationSet>
-          <AssociationSet Name="FK_Member_TopicInfo_Topic" Association="Self.FK_Member_TopicInfo_Topic">
-            <End Role="Topic" EntitySet="Topic" />
-            <End Role="Member_TopicInfo" EntitySet="Member_TopicInfo" />
+          <AssociationSet Name="FK_Member_GroupInfo_MemberInfo" Association="Self.FK_Member_GroupInfo_MemberInfo">
+            <End Role="MemberInfo" EntitySet="MemberInfo" />
+            <End Role="Member_GroupInfo" EntitySet="Member_GroupInfo" />
           </AssociationSet>
           <AssociationSet Name="FK_Message_GroupInfo_GroupInfo" Association="Self.FK_Message_GroupInfo_GroupInfo">
             <End Role="GroupInfo" EntitySet="GroupInfo" />
@@ -251,83 +251,30 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="MEASModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="MemberInfo">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MemberId" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="SName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="MemberPwd" Type="String" MaxLength="128" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="ImageUrl" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-          <Property Name="MemberMark" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
-          <Property Name="GroupId" Type="Int32" />
-          <NavigationProperty Name="Topic" Relationship="MEASModel.Member_TopicInfo" FromRole="MemberInfo" ToRole="Topic" />
-          <NavigationProperty Name="Course" Relationship="MEASModel.Member_Course" FromRole="MemberInfo" ToRole="Course" />
-        </EntityType>
         <EntityContainer Name="MEASEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="MemberInfo" EntityType="Self.MemberInfo" />
-          <EntitySet Name="GroupInfo" EntityType="MEASModel.GroupInfo" />
-          <EntitySet Name="MessageInfo" EntityType="MEASModel.MessageInfo" />
-          <AssociationSet Name="Message_GroupInfo" Association="MEASModel.Message_GroupInfo">
-            <End Role="GroupInfo" EntitySet="GroupInfo" />
-            <End Role="MessageInfo" EntitySet="MessageInfo" />
-          </AssociationSet>
-          <EntitySet Name="Topic" EntityType="MEASModel.Topic" />
-          <AssociationSet Name="Member_TopicInfo" Association="MEASModel.Member_TopicInfo">
-            <End Role="MemberInfo" EntitySet="MemberInfo" />
-            <End Role="Topic" EntitySet="Topic" />
-          </AssociationSet>
           <EntitySet Name="Course" EntityType="MEASModel.Course" />
-          <AssociationSet Name="Member_Course" Association="MEASModel.Member_Course">
-            <End Role="Course" EntitySet="Course" />
-            <End Role="MemberInfo" EntitySet="MemberInfo" />
-          </AssociationSet>
+          <EntitySet Name="GroupInfo" EntityType="MEASModel.GroupInfo" />
+          <EntitySet Name="MemberInfo" EntityType="MEASModel.MemberInfo" />
+          <EntitySet Name="MessageInfo" EntityType="MEASModel.MessageInfo" />
           <EntitySet Name="NewsInfo" EntityType="MEASModel.NewsInfo" />
+          <EntitySet Name="Topic" EntityType="MEASModel.Topic" />
           <AssociationSet Name="Group_TopicInfo" Association="MEASModel.Group_TopicInfo">
             <End Role="GroupInfo" EntitySet="GroupInfo" />
             <End Role="Topic" EntitySet="Topic" />
           </AssociationSet>
+          <AssociationSet Name="Member_Course" Association="MEASModel.Member_Course">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="MemberInfo" EntitySet="MemberInfo" />
+          </AssociationSet>
+          <AssociationSet Name="Member_GroupInfo" Association="MEASModel.Member_GroupInfo">
+            <End Role="GroupInfo" EntitySet="GroupInfo" />
+            <End Role="MemberInfo" EntitySet="MemberInfo" />
+          </AssociationSet>
+          <AssociationSet Name="Message_GroupInfo" Association="MEASModel.Message_GroupInfo">
+            <End Role="GroupInfo" EntitySet="GroupInfo" />
+            <End Role="MessageInfo" EntitySet="MessageInfo" />
+          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="GroupInfo">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="GroupTitle" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
-          <Property Name="GroupCount" Type="Int32" />
-          <Property Name="Remark" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="MessageInfo" Relationship="MEASModel.Message_GroupInfo" FromRole="GroupInfo" ToRole="MessageInfo" />
-          <NavigationProperty Name="Topic" Relationship="MEASModel.Group_TopicInfo" FromRole="GroupInfo" ToRole="Topic" />
-        </EntityType>
-        <EntityType Name="MessageInfo">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="MessageTitle" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
-          <Property Name="MessageContent" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="GroupInfo" Relationship="MEASModel.Message_GroupInfo" FromRole="MessageInfo" ToRole="GroupInfo" />
-          <Property Name="PushTime" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <Association Name="Message_GroupInfo">
-          <End Type="MEASModel.GroupInfo" Role="GroupInfo" Multiplicity="*" />
-          <End Type="MEASModel.MessageInfo" Role="MessageInfo" Multiplicity="*" />
-        </Association>
-        <EntityType Name="Topic">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TopicName" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="MemberInfo" Relationship="MEASModel.Member_TopicInfo" FromRole="Topic" ToRole="MemberInfo" />
-          <Property Name="TopicMethod" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="GroupInfo" Relationship="MEASModel.Group_TopicInfo" FromRole="Topic" ToRole="GroupInfo" />
-        </EntityType>
-        <Association Name="Member_TopicInfo">
-          <End Type="MEASModel.MemberInfo" Role="MemberInfo" Multiplicity="*" />
-          <End Type="MEASModel.Topic" Role="Topic" Multiplicity="*" />
-        </Association>
         <EntityType Name="Course">
           <Key>
             <PropertyRef Name="id" />
@@ -348,10 +295,42 @@
           <Property Name="everyWeek" Type="Int32" Nullable="false" />
           <NavigationProperty Name="MemberInfo" Relationship="MEASModel.Member_Course" FromRole="Course" ToRole="MemberInfo" />
         </EntityType>
-        <Association Name="Member_Course">
-          <End Type="MEASModel.Course" Role="Course" Multiplicity="*" />
-          <End Type="MEASModel.MemberInfo" Role="MemberInfo" Multiplicity="*" />
-        </Association>
+        <EntityType Name="GroupInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GroupTitle" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="GroupCount" Type="Int32" />
+          <Property Name="Remark" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Topic" Relationship="MEASModel.Group_TopicInfo" FromRole="GroupInfo" ToRole="Topic" />
+          <NavigationProperty Name="MemberInfo" Relationship="MEASModel.Member_GroupInfo" FromRole="GroupInfo" ToRole="MemberInfo" />
+          <NavigationProperty Name="MessageInfo" Relationship="MEASModel.Message_GroupInfo" FromRole="GroupInfo" ToRole="MessageInfo" />
+        </EntityType>
+        <EntityType Name="MemberInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MemberId" Type="String" Nullable="false" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="SName" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="MemberPwd" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="ImageUrl" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="MemberMark" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="GroupId" Type="Int32" />
+          <NavigationProperty Name="Course" Relationship="MEASModel.Member_Course" FromRole="MemberInfo" ToRole="Course" />
+          <NavigationProperty Name="GroupInfo" Relationship="MEASModel.Member_GroupInfo" FromRole="MemberInfo" ToRole="GroupInfo" />
+        </EntityType>
+        <EntityType Name="MessageInfo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MessageTitle" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <Property Name="MessageContent" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PushTime" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="GroupInfo" Relationship="MEASModel.Message_GroupInfo" FromRole="MessageInfo" ToRole="GroupInfo" />
+        </EntityType>
         <EntityType Name="NewsInfo">
           <Key>
             <PropertyRef Name="Id" />
@@ -365,74 +344,37 @@
           <Property Name="title" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
           <Property Name="imageUrl" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="Topic">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TopicName" Type="String" Nullable="false" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="TopicMethod" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="GroupInfo" Relationship="MEASModel.Group_TopicInfo" FromRole="Topic" ToRole="GroupInfo" />
+        </EntityType>
         <Association Name="Group_TopicInfo">
           <End Type="MEASModel.GroupInfo" Role="GroupInfo" Multiplicity="*" />
           <End Type="MEASModel.Topic" Role="Topic" Multiplicity="*" />
         </Association>
-      </Schema>
+        <Association Name="Member_Course">
+          <End Type="MEASModel.Course" Role="Course" Multiplicity="*" />
+          <End Type="MEASModel.MemberInfo" Role="MemberInfo" Multiplicity="*" />
+        </Association>
+        <Association Name="Member_GroupInfo">
+          <End Type="MEASModel.GroupInfo" Role="GroupInfo" Multiplicity="*" />
+          <End Type="MEASModel.MemberInfo" Role="MemberInfo" Multiplicity="*" />
+        </Association>
+        <Association Name="Message_GroupInfo">
+          <End Type="MEASModel.GroupInfo" Role="GroupInfo" Multiplicity="*" />
+          <End Type="MEASModel.MessageInfo" Role="MessageInfo" Multiplicity="*" />
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="MEASModelStoreContainer" CdmEntityContainer="MEASEntities">
-          <EntitySetMapping Name="MemberInfo">
-            <EntityTypeMapping TypeName="MEASModel.MemberInfo">
-              <MappingFragment StoreEntitySet="MemberInfo">
-                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="MemberId" ColumnName="MemberId" />
-                <ScalarProperty Name="SName" ColumnName="SName" />
-                <ScalarProperty Name="MemberPwd" ColumnName="MemberPwd" />
-                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
-                <ScalarProperty Name="MemberMark" ColumnName="MemberMark" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="GroupInfo">
-            <EntityTypeMapping TypeName="MEASModel.GroupInfo">
-              <MappingFragment StoreEntitySet="GroupInfo">
-                <ScalarProperty Name="Remark" ColumnName="Remark" />
-                <ScalarProperty Name="GroupCount" ColumnName="GroupCount" />
-                <ScalarProperty Name="GroupTitle" ColumnName="GroupTitle" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="MessageInfo">
-            <EntityTypeMapping TypeName="MEASModel.MessageInfo">
-              <MappingFragment StoreEntitySet="MessageInfo">
-                <ScalarProperty Name="PushTime" ColumnName="PushTime" />
-                <ScalarProperty Name="MessageContent" ColumnName="MessageContent" />
-                <ScalarProperty Name="MessageTitle" ColumnName="MessageTitle" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <AssociationSetMapping Name="Message_GroupInfo" TypeName="MEASModel.Message_GroupInfo" StoreEntitySet="Message_GroupInfo">
-            <EndProperty Name="MessageInfo">
-              <ScalarProperty Name="Id" ColumnName="MessageId" />
-            </EndProperty>
-            <EndProperty Name="GroupInfo">
-              <ScalarProperty Name="Id" ColumnName="GroupId" />
-            </EndProperty>
-          </AssociationSetMapping>
-          <EntitySetMapping Name="Topic">
-            <EntityTypeMapping TypeName="MEASModel.Topic">
-              <MappingFragment StoreEntitySet="Topic">
-                <ScalarProperty Name="TopicMethod" ColumnName="TopicMethod" />
-                <ScalarProperty Name="TopicName" ColumnName="TopicName" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <AssociationSetMapping Name="Member_TopicInfo" TypeName="MEASModel.Member_TopicInfo" StoreEntitySet="Member_TopicInfo">
-            <EndProperty Name="Topic">
-              <ScalarProperty Name="Id" ColumnName="TopicId" />
-            </EndProperty>
-            <EndProperty Name="MemberInfo">
-              <ScalarProperty Name="Id" ColumnName="MemberId" />
-            </EndProperty>
-          </AssociationSetMapping>
           <EntitySetMapping Name="Course">
             <EntityTypeMapping TypeName="MEASModel.Course">
               <MappingFragment StoreEntitySet="Course">
@@ -453,14 +395,39 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="Member_Course" TypeName="MEASModel.Member_Course" StoreEntitySet="Member_Course">
-            <EndProperty Name="MemberInfo">
-              <ScalarProperty Name="Id" ColumnName="MemberId" />
-            </EndProperty>
-            <EndProperty Name="Course">
-              <ScalarProperty Name="id" ColumnName="CourseId" />
-            </EndProperty>
-          </AssociationSetMapping>
+          <EntitySetMapping Name="GroupInfo">
+            <EntityTypeMapping TypeName="MEASModel.GroupInfo">
+              <MappingFragment StoreEntitySet="GroupInfo">
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="GroupCount" ColumnName="GroupCount" />
+                <ScalarProperty Name="GroupTitle" ColumnName="GroupTitle" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MemberInfo">
+            <EntityTypeMapping TypeName="MEASModel.MemberInfo">
+              <MappingFragment StoreEntitySet="MemberInfo">
+                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+                <ScalarProperty Name="MemberMark" ColumnName="MemberMark" />
+                <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+                <ScalarProperty Name="MemberPwd" ColumnName="MemberPwd" />
+                <ScalarProperty Name="SName" ColumnName="SName" />
+                <ScalarProperty Name="MemberId" ColumnName="MemberId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MessageInfo">
+            <EntityTypeMapping TypeName="MEASModel.MessageInfo">
+              <MappingFragment StoreEntitySet="MessageInfo">
+                <ScalarProperty Name="PushTime" ColumnName="PushTime" />
+                <ScalarProperty Name="MessageContent" ColumnName="MessageContent" />
+                <ScalarProperty Name="MessageTitle" ColumnName="MessageTitle" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="NewsInfo">
             <EntityTypeMapping TypeName="MEASModel.NewsInfo">
               <MappingFragment StoreEntitySet="NewsInfo">
@@ -475,9 +442,42 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Topic">
+            <EntityTypeMapping TypeName="MEASModel.Topic">
+              <MappingFragment StoreEntitySet="Topic">
+                <ScalarProperty Name="TopicMethod" ColumnName="TopicMethod" />
+                <ScalarProperty Name="TopicName" ColumnName="TopicName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <AssociationSetMapping Name="Group_TopicInfo" TypeName="MEASModel.Group_TopicInfo" StoreEntitySet="Group_TopicInfo">
             <EndProperty Name="Topic">
               <ScalarProperty Name="Id" ColumnName="TopicId" />
+            </EndProperty>
+            <EndProperty Name="GroupInfo">
+              <ScalarProperty Name="Id" ColumnName="GroupId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Member_Course" TypeName="MEASModel.Member_Course" StoreEntitySet="Member_Course">
+            <EndProperty Name="MemberInfo">
+              <ScalarProperty Name="Id" ColumnName="MemberId" />
+            </EndProperty>
+            <EndProperty Name="Course">
+              <ScalarProperty Name="id" ColumnName="CourseId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Member_GroupInfo" TypeName="MEASModel.Member_GroupInfo" StoreEntitySet="Member_GroupInfo">
+            <EndProperty Name="MemberInfo">
+              <ScalarProperty Name="Id" ColumnName="MemeberID" />
+            </EndProperty>
+            <EndProperty Name="GroupInfo">
+              <ScalarProperty Name="Id" ColumnName="GroupID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Message_GroupInfo" TypeName="MEASModel.Message_GroupInfo" StoreEntitySet="Message_GroupInfo">
+            <EndProperty Name="MessageInfo">
+              <ScalarProperty Name="Id" ColumnName="MessageId" />
             </EndProperty>
             <EndProperty Name="GroupInfo">
               <ScalarProperty Name="Id" ColumnName="GroupId" />

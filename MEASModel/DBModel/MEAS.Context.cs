@@ -25,11 +25,11 @@ namespace MEASModel.DBModel
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<MemberInfo> MemberInfo { get; set; }
-        public DbSet<GroupInfo> GroupInfo { get; set; }
-        public DbSet<MessageInfo> MessageInfo { get; set; }
-        public DbSet<Topic> Topic { get; set; }
         public DbSet<Course> Course { get; set; }
+        public DbSet<GroupInfo> GroupInfo { get; set; }
+        public DbSet<MemberInfo> MemberInfo { get; set; }
+        public DbSet<MessageInfo> MessageInfo { get; set; }
         public DbSet<NewsInfo> NewsInfo { get; set; }
+        public DbSet<Topic> Topic { get; set; }
     }
 }

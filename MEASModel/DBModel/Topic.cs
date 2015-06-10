@@ -16,7 +16,6 @@ namespace MEASModel.DBModel
     {
         public Topic()
         {
-            this.MemberInfo = new HashSet<MemberInfo>();
             this.GroupInfo = new HashSet<GroupInfo>();
         }
     
@@ -24,7 +23,6 @@ namespace MEASModel.DBModel
         public string TopicName { get; set; }
         public string TopicMethod { get; set; }
     
-        public virtual ICollection<MemberInfo> MemberInfo { get; set; }
         public virtual ICollection<GroupInfo> GroupInfo { get; set; }
     }
 }

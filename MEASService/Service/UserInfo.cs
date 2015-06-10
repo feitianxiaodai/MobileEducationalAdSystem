@@ -40,16 +40,16 @@ namespace MEASService.Service
         /// <returns></returns>
         public bool UpdateUserTopic(int memberId, int[] groupIds)
         {
-            //1.先把原来订阅的主题给删除掉
-            var userModel = _unitOfWork.UserRepository.Query().Where(s => s.Id == memberId).FirstOrDefault();
-            userModel.Topic.Clear();
-            //2.把新的主题添加上
-            foreach (var topicId in groupIds)
-            {
-                var topic = _unitOfWork.TopicRepository.Query().FirstOrDefault(s => s.Id == topicId);
-                userModel.Topic.Add(topic);
-            }
-            _unitOfWork.Commit();
+            ////1.先把原来订阅的主题给删除掉
+            //var userModel = _unitOfWork.UserRepository.Query().Where(s => s.Id == memberId).FirstOrDefault();
+            //userModel.Topic.Clear();
+            ////2.把新的主题添加上
+            //foreach (var topicId in groupIds)
+            //{
+            //    var topic = _unitOfWork.TopicRepository.Query().FirstOrDefault(s => s.Id == topicId);
+            //    userModel.Topic.Add(topic);
+            //}
+            //_unitOfWork.Commit();
             return true;
         }
 
@@ -79,7 +79,18 @@ namespace MEASService.Service
 
         public List<string> GetAllTopicByMemberID(string memberID)
         {
-           return  _unitOfWork.UserRepository.Query().FirstOrDefault(s => s.MemberId == memberID).Topic.Select(s => s.TopicMethod).ToList();
+            var groupIDs = _unitOfWork.UserRepository.Query().FirstOrDefault(s => s.MemberId == memberID).GroupInfo.Select(s => s.Id).ToList();
+            List<string> topic = new List<string>();
+            if(groupIDs!=null && groupIDs.Count>0)
+            {
+                foreach(var item in groupIDs)
+                {
+                    var topicList = _unitOfWork.GroupeRepository.Query().FirstOrDefault(s => s.Id == item).Topic.Select(s => s.TopicMethod).ToList();
+
+                    topic.AddRange(topicList);
+                }
+            }
+            return topic;
         }
     }
 }
