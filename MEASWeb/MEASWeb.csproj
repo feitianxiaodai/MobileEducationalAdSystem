@@ -143,6 +143,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="Content\body.css" />
     <Content Include="Content\css\bootstrap.css" />
     <Content Include="Content\css\elfinder.css" />
     <Content Include="Content\css\fancybox.css" />
@@ -1174,6 +1175,7 @@
     <Content Include="Content\js\plugins\wizards\jquery.form.js" />
     <Content Include="Content\js\plugins\wizards\jquery.form.wizard.js" />
     <Content Include="Content\js\plugins\wizards\jquery.validate.js" />
+    <Content Include="Content\style.css" />
     <Content Include="Global.asax" />
     <Content Include="Content\css\.DS_Store" />
     <Content Include="Content\css\font\.DS_Store" />

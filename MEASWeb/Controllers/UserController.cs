@@ -57,6 +57,11 @@ namespace MEASWeb.Controllers
             return View();
         }
 
+        public ActionResult Login()
+        {
+            return View();
+        }
+
         [HttpPost]
         public ActionResult Login(Models.MemberViewModel viewModel)
         {
@@ -65,7 +70,13 @@ namespace MEASWeb.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+            ModelState.AddModelError("error", "用户名或密码错误");
             return View();
+        }
+
+        public ActionResult Logout()
+        {
+            return RedirectToAction("Login");
         }
     }
 }
