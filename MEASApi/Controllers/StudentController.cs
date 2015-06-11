@@ -21,7 +21,7 @@ namespace MEASApi.Controllers
                 res.ErrorCode = 0;
                 res.Message = "登录成功";
                 var topic = iMemberInforService.GetAllTopicByMemberID(stu.sNo);
-                res.Data = new Memeber { SName = resultModel.SName, MemberId = resultModel.MemberId, MemberPwd = resultModel.MemberPwd, TopicList = topic };
+                res.Data = new Memeber { SName = resultModel.SName, MemberId = resultModel.MemberId, MemberPwd = resultModel.MemberPwd, TopicList = topic,ImageUrl = resultModel.ImageUrl };
             }
             else
             {

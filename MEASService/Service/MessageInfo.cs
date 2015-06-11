@@ -10,8 +10,8 @@ namespace MEASService.Service
 {
     public class MessageInfo
     {
-         private UnitOfWork _unitOfWork = null;
-         public MessageInfo()
+        private UnitOfWork _unitOfWork = null;
+        public MessageInfo()
         {
             _unitOfWork = new UnitOfWork();
         }
@@ -48,9 +48,10 @@ namespace MEASService.Service
         public List<string> GetTopicByGroupIds(int[] groupIds)
         {
             List<string> topicList = new List<string>();
-            if(groupIds!=null && groupIds.Count()>0)
+            if (groupIds != null && groupIds.Count() > 0)
             {
-                topicList = _unitOfWork.TopicRepository.Query().Where(s => s.GroupInfo.Any(g => groupIds.Contains(g.Id))).Select(s => s.TopicMethod).ToList();
+                //topicList = _unitOfWork.TopicRepository.Query().Where(s => s.GroupInfo.Any(g => groupIds.Contains(g.Id))).Select(s => s.TopicMethod).ToList();
+                topicList = _unitOfWork.TopicRepository.Query().Where(s => groupIds.Contains(s.Id)).Select(s => s.TopicMethod).ToList();
             }
             return topicList;
         }

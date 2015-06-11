@@ -14,16 +14,9 @@ namespace MEASModel.DBModel
     
     public partial class MessageInfo
     {
-        public MessageInfo()
-        {
-            this.GroupInfo = new HashSet<GroupInfo>();
-        }
-    
         public int Id { get; set; }
         public string MessageTitle { get; set; }
         public string MessageContent { get; set; }
         public string PushTime { get; set; }
-    
-        public virtual ICollection<GroupInfo> GroupInfo { get; set; }
     }
 }

@@ -16,7 +16,7 @@ namespace MEASService.Service
         }
         public MEASModel.DBModel.GroupInfo GetGroupInfo(int id)
         {
-            var model = _unitOfWork.GroupeRepository.Query().Where(s=>s.Id==id).ToList();
+            var model = _unitOfWork.GroupeRepository.Query().Where(s => s.Id == id).ToList();
             var temp = model[0];
             return temp;
         }
@@ -24,10 +24,11 @@ namespace MEASService.Service
 
         public List<MEASModel.POCOModel.POCOGroupModel> GetGroupList()
         {
-            var groupList = _unitOfWork.GroupeRepository.Query().Select(s => new MEASModel.POCOModel.POCOGroupModel
+
+            var groupList = _unitOfWork.TopicRepository.Query().Select(s => new MEASModel.POCOModel.POCOGroupModel
             {
-                GroupTitle = s.GroupTitle,
-                ID = s.Id
+                GroupTitle = s.TopicName,
+                ID = s.Id,
             }).ToList();
             return groupList;
         }

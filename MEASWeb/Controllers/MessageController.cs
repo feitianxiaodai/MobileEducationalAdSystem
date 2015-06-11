@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
@@ -50,15 +51,15 @@ namespace MEASWeb.Controllers
             dbModel.MessageTitle = model.MessageTitle;
             dbModel.PushTime = DateTime.Now.ToString();
 
-            if (model.PushGroup != null && model.PushGroup.Count() > 0)
-            {
-                foreach (var groupId in model.PushGroup)
-                {
-                    dbModel.GroupInfo.Add(new MEASModel.DBModel.GroupInfo { Id = groupId });
-                }
-            }
-            iMessageService.AddMessage(dbModel);
-
+            //if (model.PushGroup != null && model.PushGroup.Count() > 0)
+            //{
+            //    foreach (var groupId in model.PushGroup)
+            //    {
+            //        dbModel.GroupInfo.Add(new MEASModel.DBModel.GroupInfo { Id = groupId });
+            //    }
+            //}
+            //iMessageService.AddMessage(dbModel);
+            
             //推动消息给服务器
             var pushModel = new Models.PushMessageModel() { content = model.MessageContent, title = model.MessageTitle };
             if(model.NewID>0)

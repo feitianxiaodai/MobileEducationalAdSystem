@@ -143,6 +143,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="Content\avatarlogo\1.jpg" />
+    <Content Include="Content\avatarlogo\2.jpg" />
     <Content Include="Content\body.css" />
     <Content Include="Content\css\bootstrap.css" />
     <Content Include="Content\css\elfinder.css" />
@@ -1500,10 +1502,10 @@
     <Content Include="Service References\pushService\MEASWeb.pushService.PushMessageByTopicSSSResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Content>
-    <None Include="Service References\pushService\MyPushServicePort1.xsd">
+    <None Include="Service References\pushService\MyPushServicePort.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\pushService\MyPushServiceService1.wsdl" />
+    <None Include="Service References\pushService\MyPushServiceService.wsdl" />
     <None Include="Service References\pushService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>

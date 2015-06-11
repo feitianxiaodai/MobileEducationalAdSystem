@@ -5,16 +5,14 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="065ad6ba017d4776864cc5cd0ac66776" Name="Diagram1">
-        <EntityTypeShape EntityType="MEASModel.MemberInfo" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="MEASModel.GroupInfo" Width="1.5" PointX="5.25" PointY="1.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="MEASModel.MessageInfo" Width="1.5" PointX="8" PointY="1.75" />
-        <AssociationConnector Association="MEASModel.Message_GroupInfo" />
-        <EntityTypeShape EntityType="MEASModel.Topic" Width="1.5" PointX="3" PointY="4.25" />
-        <AssociationConnector Association="MEASModel.Member_TopicInfo" />
-        <EntityTypeShape EntityType="MEASModel.Course" Width="1.5" PointX="0.75" PointY="8.5" />
+        <EntityTypeShape EntityType="MEASModel.Course" Width="1.5" PointX="0.75" PointY="1" />
+        <EntityTypeShape EntityType="MEASModel.GroupInfo" Width="1.5" PointX="0.75" PointY="5.75" />
+        <EntityTypeShape EntityType="MEASModel.MemberInfo" Width="1.5" PointX="3" PointY="1.625" />
+        <EntityTypeShape EntityType="MEASModel.MessageInfo" Width="1.5" PointX="2.75" PointY="5.75" />
+        <EntityTypeShape EntityType="MEASModel.NewsInfo" Width="1.5" PointX="5.75" PointY="4.75" />
+        <EntityTypeShape EntityType="MEASModel.Topic" Width="1.5" PointX="5.25" PointY="2" />
         <AssociationConnector Association="MEASModel.Member_Course" />
-        <EntityTypeShape EntityType="MEASModel.NewsInfo" Width="1.5" PointX="8.5" PointY="4.625" />
-        <AssociationConnector Association="MEASModel.Group_TopicInfo" />
+        <AssociationConnector Association="MEASModel.Member_Topic" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
