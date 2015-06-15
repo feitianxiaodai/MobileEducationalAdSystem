@@ -19,11 +19,11 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://172.28.1.1:8080/MyService/MyPushServicePort?wsdl" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://211.87.158.32:8080/MyService/MyPushServicePort?wsdl" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="MyPushServiceService.wsdl" MetadataType="Wsdl" ID="57ac3690-530e-44ef-b3fc-660e9fad0010" SourceId="1" SourceUrl="http://172.28.1.1:8080/MyService/MyPushServicePort?wsdl" />
-    <MetadataFile FileName="MyPushServicePort.xsd" MetadataType="Schema" ID="00867de7-5e1a-4d1e-a250-d50a4ffe6c33" SourceId="1" SourceUrl="http://172.28.1.1:8080/MyService/MyPushServicePort?xsd=1" />
+    <MetadataFile FileName="MyPushServicePort1.xsd" MetadataType="Schema" ID="6a958a22-b1a8-4e60-8399-4f8140b29bf9" SourceId="1" SourceUrl="http://211.87.158.32:8080/MyService/MyPushServicePort?xsd=1" />
+    <MetadataFile FileName="MyPushServiceService1.wsdl" MetadataType="Wsdl" ID="81fe8ef9-8ac0-4f7a-8978-802f18ccda52" SourceId="1" SourceUrl="http://211.87.158.32:8080/MyService/MyPushServicePort?wsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

@@ -18,7 +18,7 @@ namespace MEASService.Service
         {
             pageTotalCount = _unitOfWork.UserRepository.Query().Count();
             var userList = _unitOfWork.UserRepository.Query().OrderBy(s => s.Id).Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
-            if(userList!=null && userList.Count>0)
+            if (userList != null && userList.Count > 0)
             {
                 return userList;
             }
@@ -76,10 +76,19 @@ namespace MEASService.Service
             return dbModel;
         }
 
+        public bool UpdatePwd(string memberId, string oldPwd, string newPwd)
+        {
+            var userModel = _unitOfWork.UserRepository.Query().FirstOrDefault(s => s.MemberId == memberId && s.MemberPwd == oldPwd);
+            if(userModel!=null)
+            {
+                userModel.MemberPwd = newPwd;
+            }
+            return _unitOfWork.Commit() > 0;
+        }
 
         public List<string> GetAllTopicByMemberID(string memberID)
         {
-           return  _unitOfWork.UserRepository.Query().FirstOrDefault(s => s.MemberId == memberID).Topic.Select(s => s.TopicMethod).ToList();
+            return _unitOfWork.UserRepository.Query().FirstOrDefault(s => s.MemberId == memberID).Topic.Select(s => s.TopicMethod).ToList();
         }
     }
 }

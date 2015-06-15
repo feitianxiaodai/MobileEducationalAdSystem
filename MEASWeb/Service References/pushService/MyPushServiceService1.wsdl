@@ -2,7 +2,7 @@
 <definitions xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://fc.qust.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="MyPushServiceService" targetNamespace="http://fc.qust.com/" xmlns="http://schemas.xmlsoap.org/wsdl/">
   <types>
     <xsd:schema>
-      <xsd:import schemaLocation="http://172.28.1.1:8080/MyService/MyPushServicePort?xsd=1" namespace="http://fc.qust.com/" />
+      <xsd:import schemaLocation="http://211.87.158.32:8080/MyService/MyPushServicePort?xsd=1" namespace="http://fc.qust.com/" />
     </xsd:schema>
   </types>
   <message name="PushMessage">
@@ -69,7 +69,7 @@
   </binding>
   <service name="MyPushServiceService">
     <port name="MyPushServicePort" binding="tns:MyPushServicePortBinding">
-      <soap:address location="http://172.28.1.1:8080/MyService/MyPushServicePort" />
+      <soap:address location="http://211.87.158.32:8080/MyService/MyPushServicePort" />
     </port>
   </service>
 </definitions>

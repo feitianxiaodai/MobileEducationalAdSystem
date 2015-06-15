@@ -56,6 +56,11 @@ namespace MEASWeb.Controllers
         {
             return HttpUtility.UrlEncode(content, Encoding.UTF8);
         }
+
+        public ActionResult Index1()
+        {
+            return View();
+        }
     }
 
     public class Information
