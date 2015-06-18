@@ -131,6 +131,7 @@
     <Compile Include="Models\PageResult.cs" />
     <Compile Include="Models\PushMessageModel.cs" />
     <Compile Include="Models\TopicViewModel.cs" />
+    <Compile Include="Models\TreeNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\pushService\Reference.cs">
       <AutoGen>True</AutoGen>
