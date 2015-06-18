@@ -23,14 +23,15 @@ namespace MEASWeb.Controllers
         {
             int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["pageSize"]);
             int pageIndex = iDisplayStart / pageSize + 1;
-            int pageCount=0;
+            int pageCount = 0;
             var newsList = Convetor.newsListShowConvertor.ConvertToNewsListViewModel(iNewsInfo.GetNewsRecords(pageIndex, pageSize, out pageCount));
-            return Json(new PageResult { 
-                sEcho=sEcho,
-                iTotalDisplayRecords=pageCount,
-                iTotalRecords=pageCount,
-                aaData=newsList
-            },JsonRequestBehavior.AllowGet);
+            return Json(new PageResult
+            {
+                sEcho = sEcho,
+                iTotalDisplayRecords = pageCount,
+                iTotalRecords = pageCount,
+                aaData = newsList
+            }, JsonRequestBehavior.AllowGet);
         }
 
 
@@ -57,10 +58,112 @@ namespace MEASWeb.Controllers
             return HttpUtility.UrlEncode(content, Encoding.UTF8);
         }
 
+        public ActionResult Welcome()
+        {
+            return View();
+        }
+
         public ActionResult Index1()
         {
             return View();
         }
+
+        public ActionResult GetMenuData()
+        {
+            List<TreeNode> nodes = new List<TreeNode>()
+            {
+                new TreeNode()
+                {
+                    Text = "权限",
+                    IconCls = "pic_26",
+                    Children = new List<TreeNode>()
+                    {
+                        new TreeNode() { Text = "用户管理", IconCls = "pic_5", Url = Url.Action("Index", "Users") },
+                        new TreeNode() { Text = "角色管理", IconCls = "pic_198", Url = Url.Action("Index", "Roles") },
+                        new TreeNode() { Text = "组织机构管理", IconCls = "pic_93", Url = Url.Action("Index", "Organizations") },
+                    }
+                },
+                new TreeNode()
+                {
+                    Text = "系统",
+                    IconCls = "pic_100",
+                    Children = new List<TreeNode>()
+                    {
+                        new TreeNode() { Text = "操作日志", IconCls = "pic_125", Url = Url.Action("Index", "OperateLogs") },
+                        new TreeNode() { Text = "系统日志", IconCls = "pic_101", Url = Url.Action("Index", "SystemLogs") },
+                        new TreeNode() { Text = "系统设置", IconCls = "pic_89", Url = Url.Action("Index", "SystemSettings") }
+                    }
+                }
+            };
+
+            Action<ICollection<TreeNode>> action = list =>
+            {
+                foreach (TreeNode node in list)
+                {
+                    node.Id = "node" + node.Text;
+                }
+            };
+
+            foreach (TreeNode node in nodes)
+            {
+                node.Id = "node" + node.Text;
+                if (node.Children != null && node.Children.Count > 0)
+                {
+                    action(node.Children);
+                }
+            }
+
+            return Json(nodes, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetNavData()
+        {
+            List<TreeNode> nodes = new List<TreeNode>()
+            {
+                new TreeNode()
+                {
+                    Text = "权限",
+                    IconCls = "pic_26",
+                    Children = new List<TreeNode>()
+                    {
+                        new TreeNode() { Text = "用户管理", IconCls = "pic_5", Url = Url.Action("Index", "Users") },
+                        new TreeNode() { Text = "角色管理", IconCls = "pic_198", Url = Url.Action("Index", "Roles") },
+                        new TreeNode() { Text = "组织机构管理", IconCls = "pic_93", Url = Url.Action("Index", "Organizations") },
+                    }
+                },
+                new TreeNode()
+                {
+                    Text = "系统",
+                    IconCls = "pic_100",
+                    Children = new List<TreeNode>()
+                    {
+                        new TreeNode() { Text = "操作日志", IconCls = "pic_125", Url = Url.Action("Index", "OperateLogs") },
+                        new TreeNode() { Text = "系统日志", IconCls = "pic_101", Url = Url.Action("Index", "SystemLogs") },
+                        new TreeNode() { Text = "系统设置", IconCls = "pic_89", Url = Url.Action("Index", "SystemSettings") }
+                    }
+                }
+            };
+
+            Action<ICollection<TreeNode>> action = list =>
+            {
+                foreach (var node in list)
+                {
+                    node.Id = "node" + node.Text;
+                }
+            };
+
+            foreach (var node in nodes)
+            {
+                node.Id = "node" + node.Text;
+                if (node.Children != null && node.Children.Count > 0)
+                {
+                    action(node.Children);
+                }
+            }
+
+            return Json(nodes, JsonRequestBehavior.AllowGet);
+        }
+
     }
 
     public class Information
@@ -70,5 +173,27 @@ namespace MEASWeb.Controllers
         public string content { get; set; }
 
         public int type { get; set; }
+    }
+
+    public class TreeNode
+    {
+        public TreeNode()
+        {
+            Checked = false;
+        }
+
+        public string Id { get; set; }
+
+        public string Text { get; set; }
+
+        public bool Checked { get; set; }
+
+        public int Order { get; set; }
+
+        public string IconCls { get; set; }
+
+        public string Url { get; set; }
+
+        public ICollection<TreeNode> Children { get; set; }
     }
 }
