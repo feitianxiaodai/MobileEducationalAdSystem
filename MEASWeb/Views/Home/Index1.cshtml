@@ -8,29 +8,43 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Index1</title>
-    <link href="~/css/themes/bootstrap/easyui.css" rel="stylesheet" />
+    <link href="~/css/themes/default/easyui.css" rel="stylesheet" />
     <link href="~/css/themes/icon.css" rel="stylesheet" />
     <script src="~/css/jquery.min.js"></script>
     <script src="~/css/jquery.easyui.min.js"></script>
+    <style>
+        .easyui-accordion ul li {
+            padding:0px;
+            height:24px;
+        }
+
+        .easyui-accordion ul li a {
+            text-decoration: none;
+            color: #000;
+            line-height: 24px;
+        }
+        .easyui-accordion ul li div {
+            margin: 2px 0px;
+            padding-left: 10px;
+            padding-top: 2px;
+        }
+        .easyui-accordion ul li div:hover {
+            border: 1px dashed #99BBE8;
+            background: #E0ECFF;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body class="easyui-layout">
     <div data-options="region:'north',border:false" style="height: 80px; background: #B3DFDA;padding:10px"></div>
     <div data-options="region:'west',split:true,title:'菜单'" style="width:170px;">
         <div class="easyui-accordion" fit="true" style="width:170px;">
-            <div title="Language">
+            <div title="新闻管理">
                 <ul class="easyui-tree">
-                    <a style="display:block;"><li><span>审核博客</span></li></a>
-                    @*<li>
-                        <span><a target="mainFrame" href="http://www.baidu.com">审核博客</a></span>
-                    </li>
-                    <li>
-                        <span><a href="#">File 12</a></span>
-                    </li>
-                    <li>
-                        <span>File 13</span>
-                    </li>*@
-
-                   
+                    <li><a class="active" name="basic" href="javascript:;" title="基础数据">基础数据</a></li>
+                    <li><a class="active" name="basic" href="javascript:;" title="基础数据">基础数据</a></li>
+                    <li><a class="active" name="basic" href="javascript:;" title="基础数据">基础数据</a></li>
+                    <li><a class="active" name="basic" href="javascript:;" title="基础数据">基础数据</a></li>
                 </ul>
             </div>
             <div title="Java">
