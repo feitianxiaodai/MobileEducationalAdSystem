@@ -78,5 +78,16 @@ namespace MEASWeb.Controllers
         {
             return RedirectToAction("Login");
         }
+
+        public ActionResult GridData()
+        {
+            List<object> data = new List<object>();
+            for (int i = 1; i <= 20; i++)
+            {
+                var item = new { Id = i, Name = "UserName" + i, NickName = "用户" + i, IsDeleted = true, CreatedTime = DateTime.Now.AddMinutes(i) };
+                data.Add(item);
+            }
+            return Json(new GridData<object>(data, data.Count), JsonRequestBehavior.AllowGet);
+        }
     }
 }

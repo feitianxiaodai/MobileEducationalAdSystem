@@ -124,6 +124,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\GridData.cs" />
     <Compile Include="Models\MemberViewModel.cs" />
     <Compile Include="Models\MessageListViewModel.cs" />
     <Compile Include="Models\NewsListViewModel.cs" />
@@ -1992,6 +1993,8 @@
     <Content Include="Scripts\osharp.data.js" />
     <Content Include="Scripts\osharp.easyui.js" />
     <Content Include="Scripts\osharp.global.js" />
+    <Content Include="Scripts\plugins\datagrid-detailview.js" />
+    <Content Include="Scripts\plugins\datagrid-filter.js" />
     <Content Include="Scripts\plupload\i18n\ar.js" />
     <Content Include="Scripts\plupload\i18n\az.js" />
     <Content Include="Scripts\plupload\i18n\bs.js" />
@@ -2091,7 +2094,7 @@
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\Share\_BackLayout.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\Index2.cshtml" />
     <Content Include="Views\News\Create.cshtml" />
     <Content Include="Views\News\Edit.cshtml" />
     <Content Include="Views\Common\Error.cshtml" />
@@ -2100,12 +2103,13 @@
     <Content Include="Views\Message\_PartialMessage.cshtml" />
     <Content Include="Views\Topic\Create.cshtml" />
     <Content Include="Views\Topic\Index.cshtml" />
-    <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\EditUserTopic.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\Share\_AdminLayout.cshtml" />
-    <Content Include="Views\Home\Index1.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Welcome.cshtml" />
+    <Content Include="Views\Share\_DataGridLayout.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
