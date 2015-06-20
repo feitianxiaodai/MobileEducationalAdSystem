@@ -7,7 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 namespace MEASWeb.Controllers
 {
-    
+
     public class UserController : Controller
     {
         MEASService.Service.UserInfo iUserService = new MEASService.Service.UserInfo();
@@ -17,31 +17,24 @@ namespace MEASWeb.Controllers
             return View();
         }
 
-        [HttpGet]
-        public ActionResult _AjaxGetUserRecords(int sEcho, int iDisplayStart)
+        public ActionResult _AjaxGetUserRecords()
         {
             int pageSize = Convert.ToInt32(ConfigurationManager.AppSettings["pageSize"]);
-            int pageIndex = iDisplayStart / pageSize + 1;
             int pageCount = 0;
-            var userList = iUserService.GetUserRecords(pageIndex, pageSize, out pageCount).Select(s=>Convetor.UserConvertor.ConvertToUserViewModel(s)).ToList();
-            return Json(new PageResult
-            {
-                sEcho = sEcho,
-                iTotalDisplayRecords = pageCount,
-                iTotalRecords = pageCount,
-                aaData = userList
-            }, JsonRequestBehavior.AllowGet);
+            int pageIndex = Convert.ToInt16(Request.Form["pageIndex"]);
+            var userList = iUserService.GetUserRecords(pageIndex, pageSize, out pageCount).Select(s => Convetor.UserConvertor.ConvertToUserViewModel(s)).ToList();
+            return Json(new GridData<object>(userList, pageCount));
         }
 
         public ActionResult EditUserTopic(int id)
         {
             var userDbModel = iUserService.GetUserInfoByID(id);
             Models.MemberViewModel viewModel = null;
-            if(userDbModel!=null)
+            if (userDbModel != null)
             {
                 viewModel = Convetor.UserConvertor.ConvertToUserViewModel(userDbModel);
             }
-            var topicRecords = iTopicService.GetAllTopicRecords().Select(s=>Convetor.TopicConvertor.ConvertToTopicViewModel(s)).ToList();
+            var topicRecords = iTopicService.GetAllTopicRecords().Select(s => Convetor.TopicConvertor.ConvertToTopicViewModel(s)).ToList();
             ViewBag.topicRecords = topicRecords;
             return View(viewModel);
         }
@@ -50,13 +43,24 @@ namespace MEASWeb.Controllers
         public ActionResult EditUserTopic(MemberViewModel viewModel, int[] TopicGroup)
         {
             bool result = iUserService.UpdateUserTopic(viewModel.Id, TopicGroup);
-            if(result)
+            if (result)
             {
                 return RedirectToAction("Index");
             }
             return View();
         }
 
+        public ActionResult _AjaxDeleteUsers(int[] ids)
+        {
+            bool result = iUserService.DeleteUserByIds(ids);
+            var ajaxResult = new AjaxResultModel() { Type = "Error", Content = "删除失败" };
+            if (result)
+            {
+                ajaxResult.Content = "删除成功";
+                ajaxResult.Type = "Success";
+            }
+            return Json(ajaxResult);
+        }
         public ActionResult Login()
         {
             return View();
@@ -66,7 +70,7 @@ namespace MEASWeb.Controllers
         public ActionResult Login(Models.MemberViewModel viewModel)
         {
             var result = iUserService.Login(viewModel.MemberId, viewModel.MemberPwd);
-            if(result!=null)
+            if (result != null)
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -79,15 +83,6 @@ namespace MEASWeb.Controllers
             return RedirectToAction("Login");
         }
 
-        public ActionResult GridData()
-        {
-            List<object> data = new List<object>();
-            for (int i = 1; i <= 20; i++)
-            {
-                var item = new { Id = i, Name = "UserName" + i, NickName = "用户" + i, IsDeleted = true, CreatedTime = DateTime.Now.AddMinutes(i) };
-                data.Add(item);
-            }
-            return Json(new GridData<object>(data, data.Count), JsonRequestBehavior.AllowGet);
-        }
+
     }
 }

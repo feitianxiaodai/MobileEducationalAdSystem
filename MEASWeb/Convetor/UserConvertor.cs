@@ -13,7 +13,12 @@ namespace MEASWeb.Convetor
             {
                 Id = dbModel.Id,
                 SName = dbModel.SName,
-                MemberId = dbModel.MemberId
+                MemberId = dbModel.MemberId,
+                DepName = dbModel.OrganStruct.Name,
+                IsDel = dbModel.IsDel,
+                IsAdmin = dbModel.IsAdmin,
+                CreateTime = dbModel.CreateTime,
+
             };
             return userViewModel;
         }

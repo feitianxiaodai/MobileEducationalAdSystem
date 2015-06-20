@@ -13,10 +13,13 @@ namespace MEASWeb.Models
 
         public string SName { get; set; }
 
-        public string GroupTitle { get; set; }
-
-        public int GroupId { get; set; }
-
+        public string DepName { get; set; }
         public string MemberPwd { get; set; }
+
+        public int IsDel { get; set; }
+
+        public int IsAdmin { get; set; }
+
+        public DateTime CreateTime { get; set; }
     }
 }

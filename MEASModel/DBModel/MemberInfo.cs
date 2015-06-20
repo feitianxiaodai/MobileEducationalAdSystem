@@ -27,6 +27,9 @@ namespace MEASModel.DBModel
         public string ImageUrl { get; set; }
         public string MemberMark { get; set; }
         public int DepId { get; set; }
+        public int IsDel { get; set; }
+        public System.DateTime CreateTime { get; set; }
+        public int IsAdmin { get; set; }
     
         public virtual OrganStruct OrganStruct { get; set; }
         public virtual ICollection<Course> Course { get; set; }

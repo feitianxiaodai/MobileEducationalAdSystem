@@ -30,6 +30,35 @@ namespace MEASService.Service
             return userModel;
         }
 
+        #region 1.0 删除用户
+        public bool DeleteUserByIds(int[] ids)
+        {
+            try
+            {
+                if (ids.Count() > 0)
+                {
+                    for (int i = 0; i < ids.Count(); i++)
+                    {
+                        int id = ids[i];
+                        var user = _unitOfWork.UserRepository.Query().FirstOrDefault(s => s.Id == id);
+                        if (user != null)
+                        {
+                            user.IsDel = 1;
+                        }
+                    }
+                    
+                    _unitOfWork.Commit();
+                    return true;
+                }
+                return false;
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
+            
+        }
+        #endregion
 
 
         /// <summary>
@@ -79,7 +108,7 @@ namespace MEASService.Service
         public bool UpdatePwd(string memberId, string oldPwd, string newPwd)
         {
             var userModel = _unitOfWork.UserRepository.Query().FirstOrDefault(s => s.MemberId == memberId && s.MemberPwd == oldPwd);
-            if(userModel!=null)
+            if (userModel != null)
             {
                 userModel.MemberPwd = newPwd;
             }

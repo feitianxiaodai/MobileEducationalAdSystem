@@ -2,18 +2,21 @@
     ViewBag.Title = "用户信息列表";
     Layout = "~/Views/Share/_DataGridLayout.cshtml";
     ViewBag.GridId = "users";
-    ViewBag.GridDataUrl = Url.Action("GridData");
+    ViewBag.GridDataUrl = Url.Action("_AjaxGetUserRecords");
+    ViewBag.DeleteUrl = Url.Action("_AjaxDeleteUsers");
 }
 
 @section customScript
 {
     <script type="text/javascript">
         columns = [[
-            { field: "Id", title: "编号", width: 40, halign: "center", align: "right", sortable: true },
-            { field: "Name", title: "用户名", width: 150, sortable: true },
-            { field: "NickName", title: "用户昵称", width: 150, sortable: true },
-            { field: "IsDeleted", title: "已删除", width: 80, sortable: true, align: "center", formatter: formatBoolean },
-            { field: "CreatedTime", title: "创建时间", width: 150, halign: "center", align: "center", sortable: true, formatter: function (value) { return $.osharp.tools.formatDate(value); } }
+            { field: "Id", title: "ID", halign: "center", align: "center", width: "100px" },
+            { field: "MemberId", title: "编号", halign: "center", align: "center", width: "250px" },
+            { field: "SName", title: "用户名", align: "center", width: "250px" },
+            { field: "DepName", title: "部门", align: "center", width: "250px" },
+            { field: "IsDel", title: "已删除", align: "center", width: "100px", formatter: formatBoolean },
+            { field: "IsAdmin", title: "是否为管理员", align: "center", width: "100px", formatter: formatBoolean },
+            { field: "CreateTime", title: "创建时间", width: "250px", formatter: function (value) { return $.osharp.tools.formatDate(value); } }
         ]];
     </script>
 }

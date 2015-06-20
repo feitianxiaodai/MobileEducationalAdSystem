@@ -44,15 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IService\IBaseService.cs" />
-    <Compile Include="IService\IGroupInfo.cs" />
-    <Compile Include="IService\IMemeberInfo.cs" />
-    <Compile Include="IService\IMessage.cs" />
-    <Compile Include="IService\INewsInfo.cs" />
-    <Compile Include="IService\ITopicService.cs" />
-    <Compile Include="IService\IUserInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service\BaseService.cs" />
     <Compile Include="Service\CourseInfo.cs" />
     <Compile Include="Service\GroupInfo.cs" />
     <Compile Include="Service\MemberInfo.cs" />

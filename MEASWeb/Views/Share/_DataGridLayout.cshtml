@@ -19,7 +19,7 @@
     <script src="~/Scripts/plugins/datagrid-filter.js"></script>
     <script src="~/Scripts/plugins/datagrid-detailview.js"></script>
     <script type="text/javascript">
-        var rownumbers = true, singleSelect = false, ctrlSelect = true, multiSort = false, pageSize = 25;
+        var rownumbers = true, singleSelect = false, ctrlSelect = true, multiSort = false, pageSize = 20;
         var grid, frozenColumns = [[]], columns = [[]], filterData = [], enableFilterData = false, editIndex = undefined, columnMenu = undefined;
 
         var startfunction = function () {
@@ -125,7 +125,19 @@
             }
             var ids = $.Enumerable.From(selectRows).Select(function (m) { return m.Id; }).ToArray();
             $.osharp.easyui.msg.confirm("是否要删除所有选中的行？此操作是不可恢复的。", null, function () {
-                $.post("@ViewBag.DeleteUrl", { ids: JSON.stringify(ids) }, ajaxResultHandler);
+                //$.post("@ViewBag.DeleteUrl", { ids: JSON.stringify(ids) }, ajaxResultHandler);
+                //$.post("@ViewBag.DeleteUrl", { ids: ids }, ajaxResultHandler);
+                $.ajax({
+                    url: "@ViewBag.DeleteUrl",
+                    type: "POST",
+                    traditional: true,
+                    data: {
+                        ids: ids
+                    },
+                    success: function (data) {
+                        ajaxResultHandler(data);
+                    }
+                });
             });
         };
 
@@ -189,7 +201,7 @@
                 multiSort: multiSort,
                 pagination: true,
                 pageSize: pageSize,
-                pageList: [10, 25, 50, 100, 200],
+                //pageList: [10, 25, 50, 100, 200],
                 remoteFilter: true,
                 onBeforeLoad: beforeLoad,
                 loadFilter: loadFilter,

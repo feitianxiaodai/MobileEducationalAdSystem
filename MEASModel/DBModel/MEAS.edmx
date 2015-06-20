@@ -60,6 +60,9 @@
           <Property Name="ImageUrl" Type="varchar" MaxLength="256" />
           <Property Name="MemberMark" Type="varchar" MaxLength="128" />
           <Property Name="DepId" Type="int" Nullable="false" />
+          <Property Name="IsDel" Type="int" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
+          <Property Name="IsAdmin" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="MessageInfo">
           <Key>
@@ -261,6 +264,9 @@
           <NavigationProperty Name="OrganStruct" Relationship="MEASModel.FK_MemberInfo_OrganStruct" FromRole="MemberInfo" ToRole="OrganStruct" />
           <NavigationProperty Name="Course" Relationship="MEASModel.Member_Course" FromRole="MemberInfo" ToRole="Course" />
           <NavigationProperty Name="Topic" Relationship="MEASModel.Member_Topic" FromRole="MemberInfo" ToRole="Topic" />
+          <Property Name="IsDel" Type="Int32" Nullable="false" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsAdmin" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="MessageInfo">
           <Key>
@@ -364,6 +370,9 @@
           <EntitySetMapping Name="MemberInfo">
             <EntityTypeMapping TypeName="MEASModel.MemberInfo">
               <MappingFragment StoreEntitySet="MemberInfo">
+                <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="IsDel" ColumnName="IsDel" />
                 <ScalarProperty Name="DepId" ColumnName="DepId" />
                 <ScalarProperty Name="MemberMark" ColumnName="MemberMark" />
                 <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
