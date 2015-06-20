@@ -30,6 +30,7 @@ namespace MEASModel.DBModel
         public DbSet<MemberInfo> MemberInfo { get; set; }
         public DbSet<MessageInfo> MessageInfo { get; set; }
         public DbSet<NewsInfo> NewsInfo { get; set; }
+        public DbSet<OrganStruct> OrganStruct { get; set; }
         public DbSet<Topic> Topic { get; set; }
     }
 }

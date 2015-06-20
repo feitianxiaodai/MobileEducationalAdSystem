@@ -59,7 +59,7 @@
           <Property Name="MemberPwd" Type="varchar" MaxLength="128" Nullable="false" />
           <Property Name="ImageUrl" Type="varchar" MaxLength="256" />
           <Property Name="MemberMark" Type="varchar" MaxLength="128" />
-          <Property Name="GroupId" Type="int" />
+          <Property Name="DepId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="MessageInfo">
           <Key>
@@ -82,6 +82,17 @@
           <Property Name="newBodyHtml" Type="text" Nullable="false" />
           <Property Name="title" Type="varchar" MaxLength="128" />
           <Property Name="imageUrl" Type="varchar" MaxLength="512" />
+        </EntityType>
+        <EntityType Name="OrganStruct">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="parentId" Type="int" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="256" Nullable="false" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
+          <Property Name="Remark" Type="varchar" MaxLength="512" />
         </EntityType>
         <EntityType Name="Topic">
           <Key>
@@ -139,6 +150,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_MemberInfo_OrganStruct">
+          <End Role="OrganStruct" Type="Self.OrganStruct" Multiplicity="1" />
+          <End Role="MemberInfo" Type="Self.MemberInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrganStruct">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MemberInfo">
+              <PropertyRef Name="DepId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="MEASModelStoreContainer">
           <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GroupInfo" EntityType="Self.GroupInfo" Schema="dbo" store:Type="Tables" />
@@ -147,6 +170,7 @@
           <EntitySet Name="MemberInfo" EntityType="Self.MemberInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MessageInfo" EntityType="Self.MessageInfo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NewsInfo" EntityType="Self.NewsInfo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrganStruct" EntityType="Self.OrganStruct" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Topic" EntityType="Self.Topic" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Member_Course_Course" Association="Self.FK_Member_Course_Course">
             <End Role="Course" EntitySet="Course" />
@@ -164,6 +188,10 @@
             <End Role="Topic" EntitySet="Topic" />
             <End Role="Member_Topic" EntitySet="Member_Topic" />
           </AssociationSet>
+          <AssociationSet Name="FK_MemberInfo_OrganStruct" Association="Self.FK_MemberInfo_OrganStruct">
+            <End Role="OrganStruct" EntitySet="OrganStruct" />
+            <End Role="MemberInfo" EntitySet="MemberInfo" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -175,7 +203,12 @@
           <EntitySet Name="MemberInfo" EntityType="MEASModel.MemberInfo" />
           <EntitySet Name="MessageInfo" EntityType="MEASModel.MessageInfo" />
           <EntitySet Name="NewsInfo" EntityType="MEASModel.NewsInfo" />
+          <EntitySet Name="OrganStruct" EntityType="MEASModel.OrganStruct" />
           <EntitySet Name="Topic" EntityType="MEASModel.Topic" />
+          <AssociationSet Name="FK_MemberInfo_OrganStruct" Association="MEASModel.FK_MemberInfo_OrganStruct">
+            <End Role="OrganStruct" EntitySet="OrganStruct" />
+            <End Role="MemberInfo" EntitySet="MemberInfo" />
+          </AssociationSet>
           <AssociationSet Name="Member_Course" Association="MEASModel.Member_Course">
             <End Role="Course" EntitySet="Course" />
             <End Role="MemberInfo" EntitySet="MemberInfo" />
@@ -224,7 +257,8 @@
           <Property Name="MemberPwd" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
           <Property Name="ImageUrl" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
           <Property Name="MemberMark" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
-          <Property Name="GroupId" Type="Int32" />
+          <Property Name="DepId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="OrganStruct" Relationship="MEASModel.FK_MemberInfo_OrganStruct" FromRole="MemberInfo" ToRole="OrganStruct" />
           <NavigationProperty Name="Course" Relationship="MEASModel.Member_Course" FromRole="MemberInfo" ToRole="Course" />
           <NavigationProperty Name="Topic" Relationship="MEASModel.Member_Topic" FromRole="MemberInfo" ToRole="Topic" />
         </EntityType>
@@ -250,6 +284,18 @@
           <Property Name="title" Type="String" MaxLength="128" FixedLength="false" Unicode="false" />
           <Property Name="imageUrl" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
         </EntityType>
+        <EntityType Name="OrganStruct">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="parentId" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Remark" Type="String" MaxLength="512" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="MemberInfo" Relationship="MEASModel.FK_MemberInfo_OrganStruct" FromRole="OrganStruct" ToRole="MemberInfo" />
+        </EntityType>
         <EntityType Name="Topic">
           <Key>
             <PropertyRef Name="Id" />
@@ -259,6 +305,18 @@
           <Property Name="TopicMethod" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="MemberInfo" Relationship="MEASModel.Member_Topic" FromRole="Topic" ToRole="MemberInfo" />
         </EntityType>
+        <Association Name="FK_MemberInfo_OrganStruct">
+          <End Type="MEASModel.OrganStruct" Role="OrganStruct" Multiplicity="1" />
+          <End Type="MEASModel.MemberInfo" Role="MemberInfo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OrganStruct">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MemberInfo">
+              <PropertyRef Name="DepId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="Member_Course">
           <End Type="MEASModel.Course" Role="Course" Multiplicity="*" />
           <End Type="MEASModel.MemberInfo" Role="MemberInfo" Multiplicity="*" />
@@ -306,7 +364,7 @@
           <EntitySetMapping Name="MemberInfo">
             <EntityTypeMapping TypeName="MEASModel.MemberInfo">
               <MappingFragment StoreEntitySet="MemberInfo">
-                <ScalarProperty Name="GroupId" ColumnName="GroupId" />
+                <ScalarProperty Name="DepId" ColumnName="DepId" />
                 <ScalarProperty Name="MemberMark" ColumnName="MemberMark" />
                 <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
                 <ScalarProperty Name="MemberPwd" ColumnName="MemberPwd" />
@@ -336,6 +394,18 @@
                 <ScalarProperty Name="publishTime" ColumnName="publishTime" />
                 <ScalarProperty Name="newType" ColumnName="newType" />
                 <ScalarProperty Name="author" ColumnName="author" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrganStruct">
+            <EntityTypeMapping TypeName="MEASModel.OrganStruct">
+              <MappingFragment StoreEntitySet="OrganStruct">
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="parentId" ColumnName="parentId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

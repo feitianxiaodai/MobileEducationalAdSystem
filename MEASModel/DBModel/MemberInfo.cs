@@ -26,8 +26,9 @@ namespace MEASModel.DBModel
         public string MemberPwd { get; set; }
         public string ImageUrl { get; set; }
         public string MemberMark { get; set; }
-        public Nullable<int> GroupId { get; set; }
+        public int DepId { get; set; }
     
+        public virtual OrganStruct OrganStruct { get; set; }
         public virtual ICollection<Course> Course { get; set; }
         public virtual ICollection<Topic> Topic { get; set; }
     }
