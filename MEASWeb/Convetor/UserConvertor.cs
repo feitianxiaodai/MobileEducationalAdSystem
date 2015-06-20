@@ -22,5 +22,19 @@ namespace MEASWeb.Convetor
             };
             return userViewModel;
         }
+
+        public static MemberInfo ConvertToDbModel(Models.MemberViewModel viewModel)
+        {
+            var dbModel = new MemberInfo()
+            {
+                Id = viewModel.Id,
+                SName = viewModel.SName,
+                MemberId = viewModel.MemberId,
+                DepId = viewModel.DepId,
+                IsDel = viewModel.IsDel,
+                IsAdmin = viewModel.IsAdmin,
+            };
+            return dbModel;
+        }
     }
 }

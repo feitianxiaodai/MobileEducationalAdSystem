@@ -50,6 +50,7 @@
     <Compile Include="Service\MemberInfo.cs" />
     <Compile Include="Service\MessageInfo.cs" />
     <Compile Include="Service\NewsInfo.cs" />
+    <Compile Include="Service\OrganStructInfo.cs" />
     <Compile Include="Service\TopicInfo.cs" />
     <Compile Include="Service\UserInfo.cs" />
   </ItemGroup>

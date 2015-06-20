@@ -1457,6 +1457,7 @@
     <Content Include="Content\js\plugins\wizards\jquery.form.wizard.js" />
     <Content Include="Content\js\plugins\wizards\jquery.validate.js" />
     <Content Include="Content\style.css" />
+    <Content Include="css\custome_form.css" />
     <Content Include="css\easyloader.js" />
     <Content Include="Scripts\easyui-lang-zh_CN.js" />
     <Content Include="Scripts\jquery.easyui.min.js" />
@@ -2108,6 +2109,7 @@
     <Content Include="Views\Home\Welcome.cshtml" />
     <Content Include="Views\Share\_DataGridLayout.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

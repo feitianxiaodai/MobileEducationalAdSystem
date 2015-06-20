@@ -61,6 +61,19 @@ namespace MEASService.Service
         #endregion
 
 
+        #region 2.0 更新用户
+        public bool Update(MEASModel.DBModel.MemberInfo dbModel)
+        {
+            var user = _unitOfWork.UserRepository.Query().FirstOrDefault(s => s.Id == dbModel.Id);
+            user.IsAdmin = dbModel.IsAdmin;
+            user.IsDel = dbModel.IsDel;
+            user.MemberId = dbModel.MemberId;
+            user.DepId = dbModel.DepId;
+            user.SName = dbModel.SName;
+            _unitOfWork.Commit();
+            return true;
+        }
+        #endregion
         /// <summary>
         /// 更新用户的订阅主题
         /// </summary>

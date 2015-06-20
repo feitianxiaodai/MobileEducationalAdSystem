@@ -17,6 +17,7 @@ namespace MEASDAL
         private CourseRepository _courseRepository = null;
         private GroupeRepository _groupRepository = null;
         private MessageRepository _messageRepository = null;
+        private OrganStructRepository _organstructRepository = null;
         public UnitOfWork()
         {
             _edm = new MEASEntities();
@@ -58,7 +59,7 @@ namespace MEASDAL
                 return _messageRepository;
             }
         }
-
+        
         public TopicRepository TopicRepository
         {
             get
@@ -94,6 +95,18 @@ namespace MEASDAL
                     _courseRepository = new CourseRepository(_edm);
                 }
                 return _courseRepository;
+            }
+        }
+
+        public OrganStructRepository OrganStructRepository
+        {
+            get
+            {
+                if (_organstructRepository == null)
+                {
+                    _organstructRepository = new  OrganStructRepository(_edm);
+                }
+                return _organstructRepository;
             }
         }
 

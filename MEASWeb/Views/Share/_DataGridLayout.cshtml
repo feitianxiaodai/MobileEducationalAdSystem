@@ -45,6 +45,7 @@
                 $.osharp.easyui.msg.tip("请先提交或取消正在编辑的行。");
                 return;
             }
+            
             grid.datagrid("appendRow", addObject() || {});
             editIndex = grid.datagrid("getRows").length - 1;
             grid.datagrid("selectRow", editIndex)
@@ -57,24 +58,13 @@
                 $.osharp.easyui.msg.tip("请选择要编辑的行。");
                 return;
             }
-            var index = grid.datagrid("getRowIndex", row);
+            var index = row.Id;
+            
             beginEditRow(index);
         };
 
         var beginEditRow = function (index) {
-            @if (toolbarItem == null || !toolbarItem.Contains(",save"))
-            {
-                @Html.Raw("return;")
-            }
-
-            if (endEditing()) {
-                grid.datagrid("selectRow", index)
-                    .datagrid("beginEdit", index);
-                editIndex = index;
-            } else {
-                grid.datagrid("unselectRow", index)
-                    .datagrid("selectRow", editIndex);
-            }
+            window.location = '@ViewBag.EditUrl'+'?id='+index;
         };
 
         var cancelEdit = function () {

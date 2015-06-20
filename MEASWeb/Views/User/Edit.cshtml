@@ -1,0 +1,76 @@
+﻿@model MEASWeb.Models.MemberViewModel
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Share/_AdminLayout.cshtml";
+    var organStruct = ViewBag.OrganStruct as List<SelectListItem>;
+    var status = ViewBag.Status as List<SelectListItem>;
+    var isAdmin = ViewBag.IsAdmin as List<SelectListItem>;
+}
+<link href="~/css/custome_form.css" rel="stylesheet" />
+<div class="custome-page-header">
+    <h1>修改用户信息</h1>
+</div>
+<div class="clear"></div>
+<div class="custome-page-form">
+    @using (Html.BeginForm("Edit", "User", FormMethod.Post, new { id = "userForm" }))
+    {
+        @Html.HiddenFor(s=>s.Id)
+        <div class="custome-form-group">
+            <label class="custome-lable-title" for="form-field-1">编号</label>
+            <div class="col-sm-9">
+                @*<input type="text" class="custome-col-input easyui-validatebox" name="form-field-1" data-options="required:true">*@
+                @Html.TextBoxFor(s => s.MemberId, new { @class = "custome-col-input" })
+                @Html.ValidationMessageFor(s => s.MemberId, "", new { @class = "custome-error-msg" })
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="custome-form-group">
+            <label class="custome-lable-title" for="form-field-1">用户名</label>
+            <div class="col-sm-9">
+                @Html.TextBoxFor(s => s.SName, new { @class = "custome-col-input" })
+                @Html.ValidationMessageFor(s => s.SName, "", new { @class = "custome-error-msg" })
+            </div>
+
+        </div>
+        <div class="clear"></div>
+        <div class="custome-form-group">
+            <label class="custome-lable-title" for="form-field-1">部门</label>
+            <div class="col-sm-9">
+
+                @Html.DropDownList("DepId", organStruct, new { @class = "custome-select" })
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="custome-form-group">
+            <label class="custome-lable-title" for="form-field-1">状态</label>
+            <div class="col-sm-9">
+                @Html.DropDownListFor(s => s.IsDel, status, new { @class = "custome-select" })
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="custome-form-group">
+            <label class="custome-lable-title" for="form-field-1">管理员</label>
+            <div class="col-sm-9">
+                @Html.DropDownList("IsAdmin", isAdmin, new { @class = "custome-select" })
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="custome-submit-button">
+            <div class="submit-content">
+                <input type="submit" value="更新" class="custome-submit" />
+                <input type="button" value="取消" class="custome-cancel" />
+            </div>
+
+        </div>
+    }
+
+</div>
+@section otherScript{
+    <script>
+        $(function () {
+            $('.custome-cancel').click(function () {
+                window.location = '@Url.Action("Index")';
+            });
+        });
+    </script>
+}

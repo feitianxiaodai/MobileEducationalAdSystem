@@ -12,6 +12,7 @@ namespace MEASWeb.Controllers
     {
         MEASService.Service.UserInfo iUserService = new MEASService.Service.UserInfo();
         MEASService.Service.TopicInfo iTopicService = new MEASService.Service.TopicInfo();
+        MEASService.Service.OrganStructInfo iOrganStruct = new MEASService.Service.OrganStructInfo();
         public ActionResult Index()
         {
             return View();
@@ -64,6 +65,63 @@ namespace MEASWeb.Controllers
         public ActionResult Login()
         {
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult Edit(int id)
+        {
+            var user = iUserService.GetUserInfoByID(id);
+            MemberViewModel userViewModel = new MemberViewModel()
+            {
+                DepId = user.DepId,
+                IsAdmin = user.IsAdmin,
+                Id = user.Id,
+                IsDel = user.IsDel,
+                MemberId = user.MemberId,
+                SName = user.SName,
+            };
+            var organStructList = iOrganStruct.GetAllOrganStructList(s => s.Status == 1);
+            List<SelectListItem> selectItems = new List<SelectListItem>();
+
+            //生成部门的下拉框
+            if (organStructList != null && organStructList.Count > 0)
+            {
+                foreach (var item in organStructList)
+                {
+                    selectItems.Add(new SelectListItem { Text = item.Name, Value = item.Id.ToString(), Selected = item.Id == userViewModel.DepId ? true : false });
+                }
+            }
+
+            //生成用户状态下拉框
+            List<SelectListItem> userStatusSelect = new List<SelectListItem>()
+            {
+                new SelectListItem{ Text= "正常",Value="0"},
+                new SelectListItem{Text="删除",Value="1"},
+            };
+
+            //生成用户是否为管理员下拉框
+            List<SelectListItem> isAdminSelect = new List<SelectListItem>()
+            {
+               new SelectListItem{ Text= "管理员", Value="1", Selected = userViewModel.IsAdmin==1?true:false },
+               new SelectListItem{Text="普通用户",Value="0" , Selected = userViewModel.IsAdmin==0?true:false},
+            };
+
+            ViewBag.OrganStruct = selectItems;
+            ViewBag.Status = userStatusSelect;
+            ViewBag.IsAdmin = isAdminSelect;
+            return View(userViewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(MEASWeb.Models.MemberViewModel viewModel)
+        {
+            if(ModelState.IsValid)
+            {
+                var model = Convetor.UserConvertor.ConvertToDbModel(viewModel);
+                iUserService.Update(model);
+            }
+            return RedirectToAction("Index");
+            
         }
 
         [HttpPost]

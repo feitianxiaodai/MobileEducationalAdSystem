@@ -1,0 +1,83 @@
+﻿* {
+    padding:0px;
+    margin:0px;
+}
+.clear{
+    clear:both;
+}
+
+.custome-page-header{
+    margin:10px 0 12px 10px;
+    border-bottom:1px dotted #e2e2e2;
+    padding-bottom:16px;
+    padding-top:7px;
+}
+.custome-page-header h1{
+    padding:0px;
+    margin:0 8px;
+    font-size:24px;
+    font-weight:lighter;
+    color:#2679b5;
+}
+.custome-page-form {
+    width:100%;
+}
+
+.custome-page-form .custome-form-group{
+    width:700px;
+    margin:0px auto;
+    margin-bottom:10px;
+    line-height:30px;
+    height:40px;
+}
+.custome-page-form .custome-form-group .custome-lable-title{
+    display:block;
+    float:left;
+    width:30%;
+    text-align:right;
+    padding-right:10px;
+    font-size:15px;
+}
+.custome-page-form .custome-form-group .col-sm-9{
+    float:left;
+    width:65%;
+}
+.custome-page-form .custome-col-input{
+    width:80%;
+    border:solid 1px #b5b5b5;
+    padding:5px;
+}
+.custome-error-msg{
+    color:#ff0000;
+}
+.custome-select{
+    width:65%;
+    padding:5px;
+}
+.custome-submit-button{
+    width:400px;
+    margin:10px auto;
+    height:35px;
+    
+}
+.custome-submit-button .submit-content {
+    width:350px;
+    padding-left:450px;
+    height:35px;
+}
+.custome-submit-button .custome-submit{
+    background-color: #4f99c6 !important;
+    border-color: #6fb3e0;
+    color:#e2e2e2;
+    font-size:15px;
+    width:100px; 
+    height:35px;
+}
+.custome-submit-button .custome-cancel{
+    background-color: #8b9aa3 !important;
+    border-color: #abbac3;
+    color:#e2e2e2;
+    font-size:15px;
+    width:100px; 
+    height:35px;
+}
