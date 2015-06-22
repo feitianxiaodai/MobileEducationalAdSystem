@@ -1,0 +1,59 @@
+﻿@model MEASModel.POCOModel.OrganStructViewModel
+@{
+    ViewBag.Title = "Add";
+    Layout = "~/Views/Share/_AdminLayout.cshtml";
+    var organStruct = ViewBag.OrganStruct as List<SelectListItem>;
+}
+<link href="~/css/custome_form.css" rel="stylesheet" />
+<div class="custome-page-header">
+    <h1>新增机构</h1>
+</div>
+<div class="clear"></div>
+<div class="custome-page-form">
+    @using (Html.BeginForm("Add", "OrganStruct", FormMethod.Post, new { id = "userForm" }))
+    {
+        <div class="custome-form-group">
+            <label class="custome-lable-title" for="form-field-1">机构名称</label>
+            <div class="col-sm-9">
+                @*<input type="text" class="custome-col-input easyui-validatebox" name="form-field-1" data-options="required:true">*@
+                @Html.TextBoxFor(s => s.Name, new { @class = "custome-col-input" })
+                @Html.ValidationMessageFor(s => s.Name, "", new { @class = "custome-error-msg" })
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="custome-form-group">
+            <label class="custome-lable-title" for="form-field-1">所属部门</label>
+            <div class="col-sm-9">
+                @Html.DropDownList("ParentId", organStruct, new { @class = "custome-select" })
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="custome-form-group">
+            <label class="custome-lable-title" for="form-field-1">状态</label>
+            <div class="col-sm-9">
+                <select name="Status" class="custome-select">
+                    <option value="1">正常</option>
+                    <option value="0">停用</option>
+                </select>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <div class="custome-submit-button">
+            <div class="submit-content">
+                <input type="submit" value="增加" class="custome-submit" />
+                <input type="button" value="取消" class="custome-cancel" />
+            </div>
+
+        </div>
+    }
+
+</div>
+@section otherScript{
+    <script>
+        $(function () {
+            $('.custome-cancel').click(function () {
+                window.location = '@Url.Action("Index")';
+            });
+        });
+    </script>
+}

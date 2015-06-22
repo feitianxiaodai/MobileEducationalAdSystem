@@ -108,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\CommonController.cs" />
+    <Compile Include="Controllers\ConStructController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
@@ -1457,6 +1458,34 @@
     <Content Include="Content\js\plugins\wizards\jquery.form.wizard.js" />
     <Content Include="Content\js\plugins\wizards\jquery.validate.js" />
     <Content Include="Content\style.css" />
+    <Content Include="Content\ztree\css\zTreeStyle\img\diy\1_close.png" />
+    <Content Include="Content\ztree\css\zTreeStyle\img\diy\1_open.png" />
+    <Content Include="Content\ztree\css\zTreeStyle\img\diy\2.png" />
+    <Content Include="Content\ztree\css\zTreeStyle\img\diy\3.png" />
+    <Content Include="Content\ztree\css\zTreeStyle\img\diy\4.png" />
+    <Content Include="Content\ztree\css\zTreeStyle\img\diy\5.png" />
+    <Content Include="Content\ztree\css\zTreeStyle\img\diy\6.png" />
+    <Content Include="Content\ztree\css\zTreeStyle\img\diy\7.png" />
+    <Content Include="Content\ztree\css\zTreeStyle\img\diy\8.png" />
+    <Content Include="Content\ztree\css\zTreeStyle\img\diy\9.png" />
+    <Content Include="Content\ztree\css\zTreeStyle\img\line_conn.gif" />
+    <Content Include="Content\ztree\css\zTreeStyle\img\loading.gif" />
+    <Content Include="Content\ztree\css\zTreeStyle\img\zTreeStandard.gif" />
+    <Content Include="Content\ztree\css\zTreeStyle\img\zTreeStandard.png" />
+    <Content Include="Content\ztree\css\zTreeStyle\zTreeStyle.css" />
+    <Content Include="Content\ztree\js\jquery-1.4.4.min.js" />
+    <Content Include="Content\ztree\js\jquery.ztree.all-3.5.js" />
+    <Content Include="Content\ztree\js\jquery.ztree.all-3.5.min.js" />
+    <Content Include="Content\ztree\js\jquery.ztree.core-3.5.js" />
+    <Content Include="Content\ztree\js\jquery.ztree.core-3.5.min.js" />
+    <Content Include="Content\ztree\js\jquery.ztree.excheck-3.5.js" />
+    <Content Include="Content\ztree\js\jquery.ztree.excheck-3.5.min.js" />
+    <Content Include="Content\ztree\js\jquery.ztree.exedit-3.5.js" />
+    <Content Include="Content\ztree\js\jquery.ztree.exedit-3.5.min.js" />
+    <Content Include="Content\ztree\js\jquery.ztree.exhide-3.5.js" />
+    <Content Include="Content\ztree\js\jquery.ztree.exhide-3.5.min.js" />
+    <Content Include="Content\ztree\left_menuForOutLook.gif" />
+    <Content Include="Content\ztree\left_menuForOutLook.png" />
     <Content Include="css\custome_form.css" />
     <Content Include="css\easyloader.js" />
     <Content Include="Scripts\easyui-lang-zh_CN.js" />
@@ -1787,6 +1816,7 @@
     <Content Include="Scripts\ckeditor\samples\assets\posteddata.php" />
     <Content Include="Scripts\ckeditor\samples\plugins\htmlwriter\assets\outputforflash\outputforflash.fla" />
     <Content Include="Scripts\ckeditor\samples\sample_posteddata.php" />
+    <Content Include="Content\json.json" />
     <None Include="Properties\PublishProfiles\MEASWeb.pubxml" />
     <None Include="Service References\pushService\configuration91.svcinfo" />
     <None Include="Service References\pushService\configuration.svcinfo" />
@@ -2110,6 +2140,8 @@
     <Content Include="Views\Share\_DataGridLayout.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
+    <Content Include="Views\OrganStruct\Index.cshtml" />
+    <Content Include="Views\OrganStruct\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

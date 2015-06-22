@@ -34,7 +34,47 @@ namespace MEASService.Service
                 }).ToList();
             }
             return organStructList;
-        } 
+        }
+        #endregion
+
+        #region 2.0 获得TreeNode节点
+        public TreeNode GetTreeNode(List<OrganStructViewModel> organStruct)
+        {
+            TreeNode node = new TreeNode();
+            if (organStruct != null && organStruct.Count > 0)
+            {
+                foreach (var item in organStruct)
+                {
+                    if (item.ParentId.Equals(0))
+                    {
+                        node.rows.Add(new { id = item.Id, Name = item.Name, Status = item.Status, CreateTime = item.CreateTime });
+                    }
+                    else
+                    {
+                        node.rows.Add(new { id = item.Id, Name = item.Name, Status = item.Status, CreateTime = item.CreateTime, _parentId = item.ParentId });
+                    }
+                }
+                node.total = node.rows.Count;
+            }
+            return node;
+        }
+        #endregion
+
+        #region 3.0 新增
+        public bool Add(OrganStructViewModel viewModel)
+        {
+            MEASModel.DBModel.OrganStruct entity = new MEASModel.DBModel.OrganStruct();
+            if(viewModel!=null)
+            {
+                entity.Status = viewModel.Status;
+                entity.Name = viewModel.Name;
+                entity.parentId = viewModel.ParentId;
+                entity.CreateTime = DateTime.Now;
+            }
+            _unitOfWork.OrganStructRepository.Insert(entity);
+            _unitOfWork.Commit();
+            return true;
+        }
         #endregion
     }
 }

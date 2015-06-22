@@ -1,0 +1,58 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Share/_AdminLayout.cshtml";
+}
+<style>
+    #tt {
+        height: auto;
+        width: 100%;
+    }
+</style>
+<table id="tt"></table>
+@section otherScript
+{
+    <script>
+        var grid,editIndex;
+        grid = $('#tt').treegrid({
+            url: '@Url.Action("_AjaxGetOrganStructTree")',
+            idField: 'id',
+            treeField: 'Name',
+            fitColumns: true,
+            title: '组织机构列表',
+            toolbar: [
+                { text: "增加", iconCls: "icon-add", handler: function () { AddOrganStruct(); } },
+                "-",
+                { text: "编辑", iconCls: "icon-edit", handler: function () { }, }
+            ],
+            columns: [[
+                //{ title: 'ID', field: 'id', width: 180, align: 'center' },
+                { title: '机构名称', field: 'Name', width: 180, align: 'center' },
+                {
+                    field: 'Status', title: '状态', width: 100, align: 'center', formatter: function (value, row, index) {
+                        if (row.Status == 1) {
+                            return '正常';
+                        }
+                        else {
+                            return '停用';
+                        }
+                    }
+                },
+                { field: 'CreateTime', title: '创建时间', width: 80, align: 'center', formatter: function (value, row, index) { return $.osharp.tools.formatDate(row.CreateTime); } },
+                //{ field: 'end', title: 'End Date', width: 80 }
+            ]]
+        });
+
+        //添加组织机构
+        function AddOrganStruct() {
+            //var row = grid.datagrid("getSelected");
+            //if (!row) {
+            //    $.osharp.easyui.msg.tip("请选择归属部门");
+            //    return;
+            //}
+            //editIndex = row.id;
+            window.location = '@Url.Action("Add")';
+        }
+
+
+    </script>
+}

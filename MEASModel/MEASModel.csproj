@@ -85,6 +85,7 @@
     </Compile>
     <Compile Include="POCOModel\OrganStructViewModel.cs" />
     <Compile Include="POCOModel\POCOGroupModel.cs" />
+    <Compile Include="POCOModel\TreeNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -85,7 +85,8 @@
             if (!value) {
                 return "";
             }
-            format = format || "yyyy-MM-dd hh:mm:ss";
+            //format = format || "yyyy-MM-dd hh:mm:ss";
+            format = format || "yyyy-MM-dd";
             return (new Date(parseInt(value.substring(value.indexOf('(') + 1, value.indexOf(')'))))).format(format);
         }
     };
